@@ -1,8 +1,11 @@
 import React from 'react'
 import { GoChevronRight, GoSearch } from "react-icons/go";
+import { Link } from 'react-router-dom';
+import KakaoMap from '../ui/KakaoMap';
 
 
-const MainPage = () => {
+
+const Main = () => {
     return (
         // <body>
         <main className='grow flex flex-col'>
@@ -26,7 +29,7 @@ const MainPage = () => {
                         <div className='font-semibold'>
                             명륜역
                         </div>
-                        <button className='hover:bg-gray-100'><GoChevronRight /></button>
+                        <button className='hover:bg-gray-100'><Link to="/parking"><GoChevronRight /></Link></button>
                     </div>
                     <div className='py-5 h-16 justify-between'>
                         <div className='text-xl pt-0 pb-3'>주차장 위치</div>
@@ -34,10 +37,14 @@ const MainPage = () => {
                     </div>
                 </div>
             </section>
-            <section className='bg-gray-500 '>
-                <div className='flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0'>
-                    <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
-                        222
+            <section>
+                <div>
+                    <div>
+                        지도
+                        <KakaoMap />
+                    </div>
+                    <div>
+                        
                     </div>
                 </div>
             </section>
@@ -46,4 +53,4 @@ const MainPage = () => {
     )
 }
 
-export default MainPage;
+export default Main;
