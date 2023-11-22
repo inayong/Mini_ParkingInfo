@@ -1,62 +1,64 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
+    
+    // // const [logIn, setLogIn] = useState();
+    // const [inUser, setInUser] = useState();
+    // const [inPw, setInPw] = useState();
 
-    const [userName, setUserName] = useState('');
-    const [passWord, setPassWord] = useState('');
+    // const saveData = () => {
+    //     const userObj = { name: inUser };
+    //     window.localStorage.setItem(inPw, JSON.stringify(userObj));
 
-    const handleLogin = (e) => {
-        e.preventDefault();
+    // };
+
+    // const onChange = (e) => {
+    //     setInUser(e.target.value)
+    //     setInPw(e.target.value)
+    // }
+
+    const [userName, setUserName] = useState("");
+    const [passWord, setPassWord] = useState("");
+    const navigate = useNavigate();
+
+    const handleUserName = (e) => {
+        setUserName(e.target.value);
+    }
+
+    const handlePassWord = (e) => {
+        setPassWord(e.target.value);
+    }
+
+    const setToken = (token) => {
+        localStorage.setItem('rasyToken', token)
+    }
+
+    // const getToken = (token) => {
+    //     return localStorage.getItem('rasyToken')
+    // }
+
+    const handleLogin = () => {
+        if(userName === "") {
+            alert("아이디 다시 입력");
+        } else if (passWord === "") {
+            alert("비밀번호 다시 입력")
+        } else {
         axios.post('http://10.125.121.217:8080/login', {
             username: userName,
             password: passWord,
-        },
-        {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'token'
-            },
         })
-        .then(function(resp) {
-            localStorage.setItem('token', resp.data.token);
-            alert('성공');
-
+        .then((res) => {
+            if (res.data.token) {
+                setToken(res.data.token);
+                // navigate()
+            }
         })
-        .catch(function(err) {
-            alert('오류'+ err)
-        });
-    //     if(userName === "") {
-    //         alert("아이디 다시 입력");
-    //     } else if (passWord === "") {
-    //         alert("비밀번호 다시 입력")
-    //     } else {
-    //     axios.post('http://10.125.121.217:8080/login', {
-    //         username: userName,
-    //         password: passWord,
-    //     })
-    //     .then(function(obj) {
-    //         localStorage.setItem("token", obj.data.data.authToken);
-    //         const config = {
-    //             Headers: {
-    //                 Authorization: `${localStorage.getItem("token")}`,
-    //             },
-    //         };
-    //         axios.get('/', config)
-    //             .then(function (resp) {
-    //                 console.log("token:" + resp.data);
-    //                 alert(userName + "님");
-    //                 window.location.href = "/";
-    //             })
-    //             .catch(function (err) {
-    //                 console.log("err" + err);
-    //             });
-    //     })
-    //     .catch(() => {
-    //         alert("다시 입력")
-    //     })
-    // }
+        .catch((err) => {
+            console.log(err, "err");
+        })
+    }
     };
 
 

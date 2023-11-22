@@ -12,6 +12,54 @@ const LoginPage = ({ setUser }) => {
 
     }, [inUser, inPw]);
     
+
+    const logIn = e => {
+        e.preventDefault();
+        fetch('http://10.125.121.217:8080/user/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json;charset=utf-8'},
+            body: JSON.stringify({
+                id: username,
+                password: password
+            }),
+        })
+            .then(res => res.json())
+            .then(data =>
+                data.accessToken
+                ? (goToMain(), window.localStorage.setItem('token', data.accessToken))
+                : alert('오류')
+            );
+    };
+    setLoginData = (e) => {
+        const {name, value} = e.target;
+        this.setState({[name]: value});
+    }
+
+    logIn = () => {
+        const { id, password } = this.state;
+        if ( id && password ) {
+            fetch('http://10.125.121.217:8080/user/login', {
+                method: 'POST',
+                body: JSON.stringify({
+                    id: id,
+                    password: password,
+                }),
+            })
+                .then((res) => res.json())
+                .then((res) => {
+                    if (res.TOKEN) {
+                        localStorage.setItem('token', `${res.TOKEN}`);
+                        localStorage.setItem('user_name', `${res.user_name}`);
+                        this.probs.history.push('/');
+                    } else {
+                        alert("오류");
+                    }
+                })
+                .catch((err) => console.log(err));
+        } else {
+            alert("입력오류");
+        }
+    }
     
 
 

@@ -8,7 +8,7 @@ import { getValue } from '@testing-library/user-event/dist/utils';
 
 const Main = () => {
 
-    const [nameInput, setNameInput] = useState('');
+    const [nameInput, setNameInput] = useState(' ');
 
     const getValue = (e) => {
         e.preventDefault();
@@ -19,8 +19,8 @@ const Main = () => {
 
     return (
         // <body>
-        <main className=' flex flex-col bg-slate-500'>
-            <section className=" bg-gray-50 py-10 h-screen">
+        <main className='grow flex flex-col bg-slate-500 overflow-auto'>
+            <section className="bg-gray-50 py-10 h-full">
                 <div className='flex justify-between pb-5'>
                     <div className='flex items-center'>
                         <h3 className='font-bold text-2xl'>주차장 정보</h3>
@@ -51,7 +51,7 @@ const Main = () => {
                     </form>
                 </div>
             </section>
-            <section className="bg-gray-300 py-5 h-screen">
+            <section className="bg-gray-300 py-5">
                 <div>
                     <div>
                         지도

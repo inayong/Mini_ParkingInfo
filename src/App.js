@@ -16,10 +16,12 @@ import ParkingFee from './page/ParkingFee';
 import InfoMain from './realtimeinfo/InfoMain';
 
 function App() {
+  // <div className="h-auto min-h-full pb-2">
   return (
     <div className="flex flex-col h-screen">
     <BrowserRouter> 
         <HeaderMenu />
+        
         <Routes>
           <Route path='/' element={<Main />}></Route>
           <Route path='/login' element={<Login />}></Route>
@@ -32,6 +34,7 @@ function App() {
           <Route path='/parkingfee' element={<ParkingFee />}></Route>
           <Route path='/infomain' element={<InfoMain />}></Route>
         </Routes>
+        
         <FooterMenu /> 
     </BrowserRouter>
     </div>

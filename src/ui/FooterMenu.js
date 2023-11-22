@@ -2,7 +2,7 @@ import React from 'react'
 
 const FooterMenu = () => {
     return (
-        <div className="flex flex-col bg-slate-600 p-5">
+        <div className="flex flex-col bg-slate-600 p-2">
             <p className="text-neutral-50 font-bold">
                 개인정보처리방침
             </p>&nbsp;
