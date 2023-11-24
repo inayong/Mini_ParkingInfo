@@ -55,7 +55,7 @@ const Main = () => {
                 <div>
                     <div>
                         지도
-                        <KakaoMap />
+                        {/* <KakaoMap /> */}
                     </div>
                     <div>
 

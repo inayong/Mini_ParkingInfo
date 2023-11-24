@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -12,35 +13,69 @@ const LoginPage = () => {
     const handleLogin = (e) => {
         e.preventDefault();
 
-        if (userName === "") {
-            alert("아이디를 입력 해주세요.")
-        } else if (passWord === "") {
-            alert("비밀번호를 입력 해주세요.")
-        } else {
-            fetch("http://10.125.121.217:8080/login", {
-                method: "post",
-                body: JSON.stringify({
-                    "username": userName,
-                    "password": passWord
-                }),
+        // const data = {
+        //     username: userName,
+        //     password: passWord,
+        // }
+        // console.log("data:" + data)
+        fetch("http://10.125.121.217:8080/login", {
+            method: "post",
+            body: {
+                "username" : userName,
+                "password" : passWord
+            }
+        })
+            .then((resp) => {
+                const tokentest = resp.headers.get("Authorization");
+                console.log(tokentest);
+                //const token = resp.data;
+                //axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+                // console.log("token" , axios.defaults.headers.common.Authorization)
+                localStorage.setItem("token: ", resp.headers.get("Authorization"))
+                localStorage.setItem("username: ", resp.headers.get("username"))
+                if (resp.status === 200) {
+                    // window.location.href = "/";
+                    navigate("/");
+                }
+                console.log(resp);
             })
-                .then((resp) => {
-                    // const tokentest = resp.headers.get("Authorization");
-                    // console.log(tokentest);
-                    // console.log(resp)
-                    if (resp.status === 200) {
-                        localStorage.setItem("token: ", resp.headers.get("Authorization"))
-                        localStorage.setItem("username: ", userName)
-                        navigate("/");
-                    } else {
-                        alert ("아이디 및 비밀번호를 다시 확인해주세요.")
-                    }
-                })
-                .catch((err) => {
-                    console.log("err", err);
-                });
-        }
+            .catch((err) => {
+                console.log(err);
+            });
+        // if (userName === "") {
+        //     alert("아이디 다시 입력")
+        // } else if (passWord === "") {
+        //     alert("비밀번호 다시 입력")
+        // } else {
+        //     axios.post('http://10.125.121.217:8080/login', {
+        //         username: userName,
+        //         password: passWord,
+        //     })
+        //         .then(function (resp) {
+        //             // console.log("login")
+        //             const token = resp.data.token;
+        //             localStorage.setItem("token:", token)
 
+
+        //             const config = {
+        //                 headers: {
+        //                     Authorization: `Bearer ${token}`,
+        //                 },
+        //             };
+        //             axios.get('/', config)
+        //                 .then(function (resp) {
+        //                     console.log("token:" + resp.data);
+        //                     alert(userName + "님");
+        //                     window.location.href = "/";
+        //                 })
+        //                 .catch(function (err) {
+        //                     console.log("err" + err);
+        //                 });
+        //         })
+        //         .catch(() => {
+        //             alert("다시 입력")
+        //         })
+        //     }
     };
 
 
@@ -48,7 +83,7 @@ const LoginPage = () => {
     return (
         <main className='grow'>
             <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-                <div className="relative py-3 sm:max-w-3xl sm:mx-auto">
+                <div className="relative py-3 sm:max-w-xl sm:mx-auto">
                     <div
                         className="absolute inset-0 bg-gradient-to-r from-blue-300 to-blue-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
                     </div>

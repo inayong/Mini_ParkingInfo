@@ -14,29 +14,32 @@ import SignUp from './page/SignUp';
 import ParkingInfo from './Info/ParkingInfo';
 import ParkingFee from './page/ParkingFee';
 import InfoMain from './realtimeinfo/InfoMain';
+import { RecoilRoot } from 'recoil';
 
 function App() {
   // <div className="h-auto min-h-full pb-2">
   return (
     <div className="flex flex-col h-screen">
-    <BrowserRouter> 
-        <HeaderMenu />
-        
-        <Routes>
-          <Route path='/' element={<Main />}></Route>
-          <Route path='/login' element={<Login />}></Route>
-          <Route path='/signup' element={<SignUp />}></Route>
-          <Route path='/board' element={<Board />}></Route>
-          <Route path='/board/boardinsert' element={<BoardInsert />}></Route>
-          <Route path='/board/boarddetail' element={<BoardDetail />}></Route>
-          <Route path='/parking' element={<Parking />}></Route>
-          <Route path='/parkinginfo' element={<ParkingInfo />}></Route>
-          <Route path='/parkingfee' element={<ParkingFee />}></Route>
-          <Route path='/infomain' element={<InfoMain />}></Route>
-        </Routes>
-        
-        <FooterMenu /> 
-    </BrowserRouter>
+      <RecoilRoot>
+        <BrowserRouter>
+          <HeaderMenu />
+
+          <Routes>
+            <Route path='/' element={<Main />}></Route>
+            <Route path='/login' element={<Login />}></Route>
+            <Route path='/signup' element={<SignUp />}></Route>
+            <Route path='/board' element={<Board />}></Route>
+            <Route path='/board/boardinsert' element={<BoardInsert />}></Route>
+            <Route path='/board/boarddetail' element={<BoardDetail />}></Route>
+            <Route path='/parking' element={<Parking />}></Route>
+            <Route path='/parkinginfo' element={<ParkingInfo />}></Route>
+            <Route path='/parkingfee' element={<ParkingFee />}></Route>
+            <Route path='/infomain' element={<InfoMain />}></Route>
+          </Routes>
+
+          <FooterMenu />
+        </BrowserRouter>
+      </RecoilRoot>
     </div>
   )
 

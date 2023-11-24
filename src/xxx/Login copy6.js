@@ -17,30 +17,32 @@ const LoginPage = () => {
         } else if (passWord === "") {
             alert("비밀번호를 입력 해주세요.")
         } else {
-            fetch("http://10.125.121.217:8080/login", {
-                method: "post",
-                body: JSON.stringify({
-                    "username": userName,
-                    "password": passWord
-                }),
-            })
-                .then((resp) => {
-                    // const tokentest = resp.headers.get("Authorization");
-                    // console.log(tokentest);
-                    // console.log(resp)
-                    if (resp.status === 200) {
-                        localStorage.setItem("token: ", resp.headers.get("Authorization"))
-                        localStorage.setItem("username: ", userName)
-                        navigate("/");
-                    } else {
-                        alert ("아이디 및 비밀번호를 다시 확인해주세요.")
-                    }
-                })
-                .catch((err) => {
-                    console.log("err", err);
-                });
-        }
+        fetch("http://10.125.121.217:8080/login", {
+            method: "post",
+            body: JSON.stringify({
+                "username" : userName,
+                "password" : passWord
+            }),
+        })
+            .then((resp) => {
+                const tokentest = resp.headers.get("Authorization");
+                console.log(tokentest);
+                console.log(resp)
+                //const token = resp.data;
 
+                // localStorage.setItem("token: ", resp.headers.get("Authorization"))/
+                localStorage.setItem("username: ", userName)
+                
+                if (resp.status === 200) {
+                    localStorage.setItem("token: ", resp.headers.get("Authorization"))
+                    navigate("/");
+                }
+            })
+            .catch((err) => {
+                console.log("아이디 및 비밀번호를 다시 확인해주세요.", err);
+            });
+        }
+        
     };
 
 
