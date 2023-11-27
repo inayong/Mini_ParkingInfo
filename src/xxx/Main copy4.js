@@ -24,19 +24,14 @@ const Main = () => {
         getData();
     }, [])
 
+    // const addressGu = parkData.map((item) => item.address.split(' ')[1]); //주소에서 구만 추출
+    //     addressGu = [...new Set(addressGu)];// 중복 제거
+    //     addressGu = addressGu.filter(Boolean); // undefined 값 제거
     const addressGu = parkData ?
         [...new Set(parkData.map(item => item.address.split(' ')[1]).filter(Boolean))]
         : [];
-    const addressGus = [...addressGu].sort();
+    const addressGus = addressGu.sort();
     console.log(addressGus)
-
-    const addressDong = parkData ?
-        [...new Set(parkData.map(item => item.address.split(' ')[2]).filter(Boolean))]
-        : [];
-    const addressDongs = [...addressDong].sort();
-    console.log(addressDongs)
-
-    
 
 
 

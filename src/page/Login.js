@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { LogAtom } from './login/LogAtom';
+import { useRecoilState } from 'recoil';
 
 const LoginPage = () => {
 
     const [userName, setUserName] = useState('');
     const [passWord, setPassWord] = useState('');
 
-    // const history = useHistory();
+    const [isLogAtom, setIsLogAtom] = useRecoilState(LogAtom);
+
     const navigate = useNavigate();
 
     const handleLogin = (e) => {
@@ -29,8 +32,9 @@ const LoginPage = () => {
                     // console.log(tokentest);
                     // console.log(resp)
                     if (resp.status === 200) {
-                        localStorage.setItem("token: ", resp.headers.get("Authorization"))
-                        localStorage.setItem("username: ", userName)
+                        localStorage.setItem("token", resp.headers.get("Authorization"))
+                        localStorage.setItem("username", userName)
+                        setIsLogAtom(true);
                         navigate("/");
                     } else {
                         alert ("아이디 및 비밀번호를 다시 확인해주세요.")
@@ -69,7 +73,9 @@ const LoginPage = () => {
                                     </div>
                                     <div className="relative">
                                         <button onClick={handleLogin} className="bg-blue-500 text-white rounded-md px-2 py-1">로그인</button>
-                                        <button className="bg-blue-500 text-white rounded-md px-2 py-1"><Link to='/signup'>회원가입</Link></button>
+                                    </div>
+                                    <div className=''>
+                                        <p className="text-gray-400"><Link to='/signup'>회원가입</Link></p>
                                     </div>
                                 </div>
                             </div>

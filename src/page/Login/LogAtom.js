@@ -1,7 +1,6 @@
-import React from 'react';
-import { atom, selector } from 'recoil';
+import { atom } from 'recoil';
 
-// export const LogAtom = atom({
-//     key : 
-//     default
-// });
+export const LogAtom = atom({
+    key : 'LogAtom',
+    default : false
+});

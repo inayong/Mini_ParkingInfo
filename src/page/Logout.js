@@ -1,24 +1,29 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { LogAtom} from '../page/'
+import { LogAtom } from '../page/login/LogAtom';
 
-const Logout = ({userName, setUserName}) => {
+const Logout = ({userName}) => {
     const navigate = useNavigate();
 
-    const [isLogIn, setIsLogIn] = useRecoilState(LogAtom);
+    const [isLogAtom, setIsLogAtom] = useRecoilState(LogAtom);
 
-    const handleLogout = () => {
+    const inputUserName = document.getElementById('username');
+    const inputValue = inputUserName.value;
+
+    const handleLogout = (e) => {
+        e.preventDefault();
         localStorage.removeItem("username");
         localStorage.removeItem("token");
-        setUserName(null);
-        // setToken(null);
+        // setUserName(null);
+        setIsLogAtom(false);
+        alert("로그아웃 완료")
         navigate("/");
     }
   return (
-    <div>
-        <div>{userName} 님</div>
-        <button handleClick={handleLogout}>Logout</button>
+    <div className='flex'>
+        <div className='flex-col pr-2'>{inputValue} 님</div>
+        <button onClick={handleLogout}>Logout</button>
     </div>
   )
 }

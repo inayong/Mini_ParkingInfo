@@ -24,21 +24,38 @@ const Main = () => {
         getData();
     }, [])
 
-    const addressGu = parkData ?
-        [...new Set(parkData.map(item => item.address.split(' ')[1]).filter(Boolean))]
-        : [];
-    const addressGus = [...addressGu].sort();
-    console.log(addressGus)
+    // let addressGu = parkData.map(item => {
+    //     const address = item.address; // address 항목 추출
+    //     // console.log(address); // address 출력
+    //     // const guSplit = address.split(' '); // 공백을 기준으로 문자열 분할
+    //     const addGu = address.split(' ')[1]; // 두 번째 요소에 해당하는 '--구' 추출
+    //     // console.log(addGu);
+        
+    //     console.log(addGu);
+    // });
 
-    const addressDong = parkData ?
-        [...new Set(parkData.map(item => item.address.split(' ')[2]).filter(Boolean))]
-        : [];
-    const addressDongs = [...addressDong].sort();
-    console.log(addressDongs)
+    let addressGu = parkData.map((item) => item.address.split(' ')[1]); //주소에서 구만 추출
+    addressGu = addressGu.filter(Boolean); // undefined 값 제거
+    addressGu = [...new Set(addressGu)];// 중복 제거
+    console.log(addressGu)
 
-    
+    // console.log(getData)
+    // useEffect(() => {
+    //     fetch("http://10.125.121.217:8080/parking/list")
+    //     .then(resp => resp.json())
+    //     .then(data => {
+    //         console.log(data)
+    //     })
+    //     .catch(err => console.log(err))
+    // })
 
+    // const [nameInput, setNameInput] = useState('');
 
+    // const getValue = (e) => {
+    //     e.preventDefault();
+    //     setNameInput(e.target.value)
+    //     console.log(e.target.value)
+    // }
 
     return (
         <main className='flex flex-col bg-slate-500'>
@@ -52,21 +69,6 @@ const Main = () => {
                     <div>
                         <select className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>
                             <option>전체</option>
-                            {addressGus.map((address) => (
-                                <option key={address} value={address}>
-                                    {address}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div>
-                        <select className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>
-                            <option>전체</option>
-                            {addressGus.map((address) => (
-                                <option key={address} value={address}>
-                                    {address}
-                                </option>
-                            ))}
                         </select>
                     </div>
                     <form className="flex items-center">
