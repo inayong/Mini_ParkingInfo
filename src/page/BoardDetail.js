@@ -8,28 +8,31 @@ const BoardDetail = () => {
             <div className="container mx-auto p-4">
                 <div>BoardDetail</div>
                 <h1 className="text-3xl font-bold mb-4">게시글 상세</h1>
-                <table className="w-full border-collapse border border-gray-300">
-                        <tr>
-                            <td className="border border-gray-300 p-2">ID</td>
-                        </tr>
-                        <tr>
-                            <td className="border border-gray-300 p-2">Title</td>
-                        </tr>
-                        <tr>
-                            <td className="border border-gray-300 p-2">Content</td>
-                        </tr>
-                        <tr>
-                            <td className="border border-gray-300 p-2">id</td>
-                        </tr>
-                        <tr>
-                            <td className="border border-gray-300 p-2">제목</td>
-                        </tr>
-                        <tr>
-                            <td className="border border-gray-300 p-2">내용</td>
-                        </tr>
-                </table>
                 <div>
-                    <button type='button'><Link to="/board">글 목록</Link></button>
+                    <div className='pb-6'>
+                        <div className='bg-slate-50 shadow-lg w-1/2 font-medium text-4xl'>제목</div>
+                    </div>
+                    <div className='pb-6'>
+                        <div className='grid grid-cols-6 gap-4 bg-slate-100'>
+                            <div className='col-start-1 col-end-6'>아이디</div>
+                            <div className='col-start-1 col-span-2'>등록시간</div>
+                            <div>조회수</div>
+                            <div className='col-end-7'>댓글수는 미정</div>
+                        </div>
+                    </div>
+                    <div className='pb-6'>
+                        <div className='bg-slate-200'>
+                            <div>글내용</div>
+                        </div>
+                    </div>
+                    <div className='pb-10'>
+                        <div className='bg-slate-300'>
+                            <div>댓글</div>
+                        </div>
+                    </div>
+                    <div className='pt-8'>
+                        <button type='button' className='border border-slate-400'><Link to="/board">글 목록</Link></button>
+                    </div>
                 </div>
             </div>
         </main>

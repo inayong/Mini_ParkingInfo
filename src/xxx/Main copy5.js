@@ -12,7 +12,7 @@ const Main = () => {
 
     const getData = () => {
 
-        fetch("http://10.125.121.217:8080/parking/refer")
+        fetch("http://10.125.121.217:8080/parking/list")
             .then(resp => resp.json())
             .then(data => {
                 setParkData(data)
@@ -25,21 +25,17 @@ const Main = () => {
         getData();
     }, [])
 
-    // console.log(Object.keys)
-    const addGu = parkData ? parkData.map((item) => item.gu) : [];
-    console.log(addGu)
-    
-    // const addressGu = parkData ?
-    //     [...new Set(parkData.map(item => item.gu).filter(Boolean))]
-    //     : [];
-    // const addressGus = [...addressGu].sort();
-    // console.log(addressGus)
+    const addressGu = parkData ?
+        [...new Set(parkData.map(item => item.address.split(' ')[1]).filter(Boolean))]
+        : [];
+    const addressGus = [...addressGu].sort();
+    console.log(addressGus)
 
-    // const addressDong = parkData ?
-    //     [...new Set(parkData.map(item => item.address.split(' ')[2]).filter(Boolean))]
-    //     : [];
-    // const addressDongs = [...addressDong].sort();
-    // console.log(addressDongs)
+    const addressDong = parkData ?
+        [...new Set(parkData.map(item => item.address.split(' ')[2]).filter(Boolean))]
+        : [];
+    const addressDongs = [...addressDong].sort();
+    console.log(addressDongs)
 
     const handleSel1 = (e) => {
         console.log(e.target.value)
@@ -60,21 +56,21 @@ const Main = () => {
                     <div>
                         <select onChange={handleSel1} className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>
                             <option>--구--</option>
-                            {/* {addressGus.map((address) => (
+                            {addressGus.map((address) => (
                                 <option key={address} value={address}>
                                     {address}
                                 </option>
-                            ))} */}
+                            ))}
                         </select>
                     </div>
                     <div>
                         <select className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>
                             <option>--동--</option>
-                            {/* {addressDongs.map((address) => (
+                            {addressDongs.map((address) => (
                                 <option key={address} value={address}>
                                     {address}
                                 </option>
-                            ))} */}
+                            ))}
                         </select>
                     </div>
                     <form className="flex items-center">
@@ -101,7 +97,8 @@ const Main = () => {
                 <div>
                     <div>
                         지도
-                        <KakaoMap />/
+                        {/* <KakaoMap /> */}
+                        {/* <KakaoMap2 /> */}
                     </div>
                     <div>
 
