@@ -37,7 +37,7 @@ const LoginPage = () => {
                         setIsLogAtom(true);
                         navigate("/");
                     } else {
-                        alert ("아이디 및 비밀번호를 다시 확인해주세요.")
+                        alert("아이디 및 비밀번호를 다시 확인해주세요.")
                     }
                 })
                 .catch((err) => {
@@ -56,7 +56,7 @@ const LoginPage = () => {
                     <div
                         className="absolute inset-0 bg-gradient-to-r from-blue-300 to-blue-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
                     </div>
-                    <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+                    <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20 ">
                         <div className="max-w-md mx-auto">
                             <div>
                                 <h1 className="text-2xl font-semibold">Login</h1>
@@ -71,13 +71,14 @@ const LoginPage = () => {
                                         <input onChange={(e) => setPassWord(e.target.value)} id="password" type="password" className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="비밀번호" />
                                         <label htmlFor="password" className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">비밀번호</label>
                                     </div>
-                                    <div className="relative">
+                                    <div className="relative ">
                                         <button onClick={handleLogin} className="bg-blue-500 text-white rounded-md px-2 py-1">로그인</button>
                                     </div>
-                                    <div className=''>
-                                        <p className="text-gray-400"><Link to='/signup'>회원가입</Link></p>
-                                    </div>
                                 </div>
+                            </div>
+                            <div className='flex'>
+                                <p className='text-gray-400 text-xs pt-3'>회원이 아니시면...</p>
+                                <p className="text-gray-400 border-b text-sm"><Link to='/signup'>회원가입</Link></p>
                             </div>
                         </div>
                     </div>
