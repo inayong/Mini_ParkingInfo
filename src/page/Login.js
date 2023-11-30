@@ -78,7 +78,7 @@ const LoginPage = () => {
                             </div>
                             <div className='flex'>
                                 <p className='text-gray-400 text-xs pt-3'>회원이 아니시면...</p>
-                                <p className="text-gray-400 border-b text-sm"><Link to='/signup'>회원가입</Link></p>
+                                <p className="text-gray-400 underline text-sm"><Link to='/signup'>회원가입</Link></p>
                             </div>
                         </div>
                     </div>

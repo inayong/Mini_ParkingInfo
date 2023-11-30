@@ -3,6 +3,7 @@ import { GoSearch } from "react-icons/go";
 import { Link, json } from 'react-router-dom';
 import KakaoMap from '../ui/KakaoMap';
 import { getValue } from '@testing-library/user-event/dist/utils';
+import KakaoMap2 from '../ui/KakaoMap';
 
 
 
@@ -21,7 +22,7 @@ const Main = () => {
             .then(resp => resp.json())
             .then(data => {
                 setParkData(data)
-                // console.log(data)
+                console.log(data)
             })
             .catch(err => console.log(err))
     }
@@ -33,16 +34,16 @@ const Main = () => {
     //option
     const addGu = [...new Set(parkData.map((item) => item.gu))];
     const addrGu = [...addGu].sort();
-    // console.log(addrGu)
+    console.log(addrGu)
 
 
     //option 선택
     const handleSel1 = () => {
-        // console.log(selRef.current.value)
+        console.log(selRef.current.value)
         if (selRef.current.value === '') return;
 
         let selgu = parkData.filter((item) => item.gu === selRef.current.value);
-        // console.log("gu", selgu)
+        console.log("gu", selgu)
         setSelGu(selgu);
 
 
@@ -52,23 +53,23 @@ const Main = () => {
 
     const addDong = [...new Set(selGu.map(item => item.dong))];
     const addrDong = [...addDong].sort();
-    // console.log("dong", addrDong)
+    console.log("dong", addrDong)
 
     const handleSel2 = () => {
-        // console.log(sel2Ref.current.value)
+        console.log(sel2Ref.current.value)
         if (sel2Ref.current.value === '') return;
 
         let seldong = selGu.map((item) => item.dong === sel2Ref.current.value);
         setSelDong(seldong)
-        // console.log("dong", seldong)
+        console.log("dong", seldong)
     }
 
     const searchClick = (e) => {
         e.preventDefault();
         const selGuValue = selRef.current.value; // 선택된 '구' 값
         const selDongValue = sel2Ref.current.value; // 선택된 '동' 값
-        // console.log("selGuValue", selGuValue)
-        // console.log("selDongValue", selDongValue)
+        console.log("selGuValue", selGuValue)
+        console.log("selDongValue", selDongValue)
 
         let searGuDong = parkData.filter((item) => {
             if (!selDongValue) {
@@ -84,6 +85,7 @@ const Main = () => {
     console.log("info", searInfo)
 
     //검색기능
+    // const [inputSearch, setinputSearch] = useState('');
 
     const handleSearch = (e) => {
         // e.preventDefault();
@@ -95,7 +97,11 @@ const Main = () => {
         setSearInfo(searPrkNm);
     }
 
-    
+    const inputClick = (e) => {
+        e.preventDefault();
+        console.log(e.target.value)
+        //이걸로 쓰려면 ref로 
+    }
 
     return (
         <main className='flex flex-col bg-slate-500'>
@@ -144,6 +150,12 @@ const Main = () => {
                             </div>
                             <input type="text" onChange={handleSearch} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-ftablel ps-10 p-2.5 " placeholder="주차장명 검색" />
                         </div>
+                        <button type="submit" onClick={inputClick} className="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                            <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                            </svg>
+                            <span className="sr-only">Search</span>
+                        </button>
                     </form>
                 </div>
                 <div className="flex pt-5">
@@ -163,7 +175,7 @@ const Main = () => {
                                     {searInfo.map((items) => (
                                         <tr key={items.id} className='border-b'>
                                             <td className='px-6 py-4'>{items.id}</td>
-                                            <td className='px-6 py-4 hover:underline'><Link to={`parking/detail/${items.prkPlaceNm}`}>{items.prkPlaceNm}</Link></td>
+                                            <td className='px-6 py-4 hover:underline'><Link to={`/parkinginfo/:${items.id}`}>{items.prkPlaceNm}</Link></td>
                                             <td className='px-6 py-4'>{items.address}</td>
                                             <td className='px-6 py-4'>{items.phoneNumber}</td>
                                         </tr>

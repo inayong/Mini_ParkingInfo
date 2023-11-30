@@ -11,7 +11,7 @@ import BoardInsert from './page/BoardInsert';
 import BoardDetail from './page/BoardDetail';
 import Parking from './page/Parking';
 import SignUp from './page/SignUp';
-import ParkingInfo from './Info/ParkingInfo';
+import ParkingDetail from './Info/ParkingDetail';
 import ParkingFee from './page/ParkingFee';
 import InfoMain from './realtimeinfo/InfoMain';
 import { RecoilRoot } from 'recoil';
@@ -29,10 +29,10 @@ function App() {
             <Route path='/login' element={<Login />}></Route>
             <Route path='/signup' element={<SignUp />}></Route>
             <Route path='/board' element={<Board />}></Route>
-            <Route path='/board/boardinsert' element={<BoardInsert />}></Route>
-            <Route path='/board/boarddetail' element={<BoardDetail />}></Route>
+            <Route path='/board/insert' element={<BoardInsert />}></Route>
+            <Route path='/board/detail' element={<BoardDetail />}></Route>
             <Route path='/parking' element={<Parking />}></Route>
-            <Route path='/parkinginfo' element={<ParkingInfo />}></Route>
+            <Route path='/parking/detail/:parkingName' element={<ParkingDetail />}></Route>
             <Route path='/parkingfee' element={<ParkingFee />}></Route>
             <Route path='/infomain' element={<InfoMain />}></Route>
           </Routes>
