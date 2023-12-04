@@ -28,15 +28,13 @@ const KakaoMap = () => {
         // console.log("ma", mapAddr)
     }, [parkData])
 
-
-
     useEffect(() => {
         // console.log("daaa", parkData.address)
         if (parkData.length > 0) {
             const container = mapContainer.current;
             const options = {
                 center: new window.kakao.maps.LatLng(35.157759003, 129.059317193),
-                level: 3,
+                level: 8,
             };
             const map = new window.kakao.maps.Map(container, options);
 
@@ -61,23 +59,10 @@ const KakaoMap = () => {
                             title: item.prkPlaceNm
                         });
 
-                        const iwContent = `<div style="width:150px;text-align:center;padding:6px 0;">${item.prkPlaceNm}</div>`;
-
                         const infowindow = new window.kakao.maps.InfoWindow({
-                            content: iwContent
+                            content: `<div style="width:150px;text-align:center;padding:6px 0;">${item.prkPlaceNm}</div>`,
                         });
-
-                        window.kakao.maps.event.addListener(marker, 'mouseover', function () {
-                            infowindow.open(map, marker);
-                        });
-
-                        window.kakao.maps.event.addListener(marker, 'mouseout', function () {
-                            infowindow.close();
-                        })
-
-                        window.kakao.maps.event.addListener(marker, 'click', function () {
-                             
-                        });
+                        infowindow.open(map, marker);
 
                         map.setCenter(coords);
                     }

@@ -5,10 +5,12 @@ module.exports = {
     extend: {},
     fontFamily: {
       KCCGanpan: ["KCC-Ganpan"],
-    },
-    fontFamily: {
       EFwatermelonSalad: ["EF_watermelonSalad"],
+      HakgyoansimWoojuR: ["HakgyoansimWoojuR"],
     },
+    // colors: {
+    //   'header': '#D7DDBE',
+    // },
   },
   plugins: [],
 }

@@ -15,13 +15,26 @@ const Main = () => {
     const [selDong, setSelDong] = useState([]);
     const [searInfo, setSearInfo] = useState([]);
 
-    //페이징
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const displayData = searInfo.slice(startIndex, endIndex);
 
+    // const [page, setPage] = useState(1);
+    // const [post, setPost] = useState([]);
+    // const pageRange = 5;
+    // const totalPost = 598;
+    // const btnRange = 5;
+
+    // const currentSet = Math.ceil(page / btnRange);
+    // const startPage = (currentSet - 1) * btnRange + 1;
+
+    // const endPage = startPage + btnRange - 1;
+    // const totalSet = Math.ceil(Math.ceil(totalPost / pageRange) / btnRange);
+
+    // const startPost = (page - 1) * pageRange + 1;
+    // const endPost = startPost + pageRange - 1;
 
 
     //fetch
@@ -91,7 +104,7 @@ const Main = () => {
         setSearInfo(searGuDong);
     }
 
-    // console.log("info", searInfo)
+    console.log("info", searInfo)
 
     //검색기능
 
@@ -101,7 +114,7 @@ const Main = () => {
         let searPrkNm = parkData.filter((item) =>
             item.prkPlaceNm.includes(e.target.value) || item.address.includes(e.target.value)
         );
-        // console.log("search", searPrkNm)
+        console.log("search", searPrkNm)
         setSearInfo(searPrkNm);
     }
 
@@ -110,7 +123,6 @@ const Main = () => {
     }
 
 
-    console.log("info", searInfo)
 
 
     return (
@@ -203,7 +215,7 @@ const Main = () => {
             </section>
             <section className="bg-gray-300 py-5 h-screen">
                 <div>
-                    <div className='flex justify-center pt-36'>
+                    <div>
                         지도
                         <KakaoMap />
                     </div>

@@ -1,46 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
+import parkingrefer from './parkingrefer.json';
 
 const KakaoMap = () => {
 
     const mapContainer = useRef(null);
     let mapAddr
-    const [parkData, setParkData] = useState([]);
+    
 
-    const getData = () => {
-
-        fetch("http://10.125.121.217:8080/parking/refer")
-            .then(resp => resp.json())
-            .then(data => {
-                setParkData(data)
-                // console.log(data)
-            })
-            .catch(err => console.log(err))
-    }
-
-    // console.log("da", parkData)
-
-    useEffect(() => {
-        getData();
-    }, [])
-
-    useEffect(() => {
-        mapAddr = parkData.map((item) => item.address);
-        // console.log("ma", mapAddr)
-    }, [parkData])
-
-
-
+    const parkrefer = parkingrefer.map((item) => item.address);
+console.log(parkrefer)
     useEffect(() => {
         // console.log("daaa", parkData.address)
-        if (parkData.length > 0) {
+        if (parkrefer.length > 0) {
             const container = mapContainer.current;
             const options = {
                 center: new window.kakao.maps.LatLng(35.157759003, 129.059317193),
-                level: 3,
+                level: 7,
             };
             const map = new window.kakao.maps.Map(container, options);
 
-            parkData.forEach((item) => {
+            parkrefer.forEach((item) => {
                 const geocoder = new window.kakao.maps.services.Geocoder();
 
                 geocoder.addressSearch(item.address, function (
@@ -61,35 +40,23 @@ const KakaoMap = () => {
                             title: item.prkPlaceNm
                         });
 
-                        const iwContent = `<div style="width:150px;text-align:center;padding:6px 0;">${item.prkPlaceNm}</div>`;
-
                         const infowindow = new window.kakao.maps.InfoWindow({
-                            content: iwContent
+                            content: `<div style="width:150px;text-align:center;padding:6px 0;">${item.prk_place_nm}</div>`,
                         });
-
-                        window.kakao.maps.event.addListener(marker, 'mouseover', function () {
-                            infowindow.open(map, marker);
-                        });
-
-                        window.kakao.maps.event.addListener(marker, 'mouseout', function () {
-                            infowindow.close();
-                        })
-
-                        window.kakao.maps.event.addListener(marker, 'click', function () {
-                             
-                        });
+                        infowindow.open(map, marker);
 
                         map.setCenter(coords);
                     }
                 });
             });
         }
-    }, [parkData]);
+    }, []);
+    // }, [parkData]);
 
     return (
         <div>
             <div>KakaoMap2</div>
-            <div id="map" style={{ width: '1000px', height: '900px' }} ref={mapContainer}></div>
+            <div id="map" style={{ width: '1500px', height: '900px' }} ref={mapContainer}></div>
         </div>
     )
 }

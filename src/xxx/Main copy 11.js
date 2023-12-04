@@ -4,8 +4,8 @@ import { Link, json } from 'react-router-dom';
 import KakaoMap from '../ui/KakaoMap';
 import { getValue } from '@testing-library/user-event/dist/utils';
 import Pagination from 'react-js-pagination';
-import "./pagination.css";
 
+const pageSize = 10;
 
 const Main = () => {
     const [parkData, setParkData] = useState([]);
@@ -14,14 +14,7 @@ const Main = () => {
     const [selGu, setSelGu] = useState([]);
     const [selDong, setSelDong] = useState([]);
     const [searInfo, setSearInfo] = useState([]);
-
-    //페이징
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const displayData = searInfo.slice(startIndex, endIndex);
-
 
 
     //fetch
@@ -91,7 +84,7 @@ const Main = () => {
         setSearInfo(searGuDong);
     }
 
-    // console.log("info", searInfo)
+    console.log("info", searInfo)
 
     //검색기능
 
@@ -101,7 +94,7 @@ const Main = () => {
         let searPrkNm = parkData.filter((item) =>
             item.prkPlaceNm.includes(e.target.value) || item.address.includes(e.target.value)
         );
-        // console.log("search", searPrkNm)
+        // console.log(searPrkNm)
         setSearInfo(searPrkNm);
     }
 
@@ -109,21 +102,22 @@ const Main = () => {
         setCurrentPage(pageNumber);
     }
 
-
-    console.log("info", searInfo)
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const displayData = searInfo.slice(startIndex, endIndex);
 
 
     return (
         <main className='flex flex-col bg-slate-500'>
-            <section className=" bg-gray-50 py-10 h-screen ">
+            <section className=" bg-gray-50 py-10 h-screen">
                 <div className='flex justify-between pb-5'>
                     <div className='flex items-center'>
                         <h3 className='font-bold text-2xl'>주차장 정보</h3>
                     </div>
                 </div>
-                <div className='flex h-full pb-10'>
+                <div className='flex'>
                     <div className='flex-none w-1/5'></div>
-                    <div className='w-3/5 bg-white shadow-xl rounded-2xl'>
+                    <div className='border-2 w-3/5 h-96'>
                         <div className='relative flex justify-center pt-12 pb-2'>
                             <div>
                                 <select onChange={handleSel1} ref={selRef} className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-ftablel p-2.5 '>
@@ -179,7 +173,7 @@ const Main = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {displayData.map((items) => (
+                                            {searInfo.map((items) => (
                                                 <tr key={items.id} className='border-b'>
                                                     <td className='px-6 py-4'>{items.id}</td>
                                                     <td className='px-6 py-4 hover:underline'><Link to={`parking/detail/${items.prkPlaceNm}`}>{items.prkPlaceNm}</Link></td>
@@ -187,13 +181,12 @@ const Main = () => {
                                                     <td className='px-6 py-4'>{items.phoneNumber}</td>
                                                 </tr>
                                             ))}
+                                            <Pagination activePage={currentPage} itemsCountPerPage={pageSize} totalItemsCount={searInfo.length} pageRangeDisplayed={5} onChange={handlePageChange}/>
                                         </tbody>
                                     </table>
                                 ) : (
                                     <p className='text-center'>'구' 또는 '동'을 선택해주시거나 주차장명을 검색해주세요.</p>
                                 )}
-
-                                <Pagination activePage={currentPage} itemsCountPerPage={itemsPerPage} totalItemsCount={searInfo.length} pageRangeDisplayed={5} onChange={handlePageChange} />
                             </div>
                             <div className="flex-none w-1/6 "></div>
                         </div>
@@ -203,9 +196,9 @@ const Main = () => {
             </section>
             <section className="bg-gray-300 py-5 h-screen">
                 <div>
-                    <div className='flex justify-center pt-36'>
+                    <div>
                         지도
-                        <KakaoMap />
+                        {/* <KakaoMap /> */}
                     </div>
                     <div>
 

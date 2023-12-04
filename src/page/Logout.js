@@ -8,8 +8,8 @@ const Logout = ({userName}) => {
 
     const [isLogAtom, setIsLogAtom] = useRecoilState(LogAtom);
 
-    const inputUserName = document.getElementById('username');
-    const inputValue = inputUserName.value;
+    // const inputUserName = document.getElementById('username');
+    // const inputValue = inputUserName.value;
 
     const handleLogout = (e) => {
         e.preventDefault();
@@ -22,7 +22,7 @@ const Logout = ({userName}) => {
     }
   return (
     <div className='flex'>
-        <div className='flex-col pr-2'>{inputValue} 님</div>
+        <div className='flex-col pr-2'>{userName} 님</div>
         <button onClick={handleLogout}>Logout</button>
     </div>
   )

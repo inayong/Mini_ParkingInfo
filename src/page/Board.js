@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Board = () => {
+    const [boardData, setBoardData] = useState([]);
 
+    const getData = () => {
+
+        fetch("http://10.125.121.217:8080/board/list")
+            .then(resp => resp.json())
+            .then(data => {
+                setBoardData(data)
+                // console.log("board",data)
+            })
+            .catch(err => console.log(err))
+    }
+
+    useEffect(() => {
+        getData();
+    }, [])
+
+    // const boardlist = boardData.map((item) => item.id)
+    // console.log(boardlist)
 
     return (
         <main className='h-screen bg-gray-100'>
@@ -18,20 +36,17 @@ const Board = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr className="bg-gray-100">
-                                <td className="border border-gray-300 p-2">1</td>
-                                <td className="border border-gray-300 p-2"><Link to="/board/detail">첫 번째 포스트</Link></td>
-                                <td className="border border-gray-300 p-2">안녕하세요! 첫 번째 포스트입니다.</td>
+                            {boardData.map((item) => (
+                            <tr key={item.id} className="bg-white">
+                                <td className="border border-gray-300 p-2">{item.id}</td>
+                                <td className="border border-gray-300 p-2"><Link to="/board/detail">{item.title}</Link></td>
+                                <td className="border border-gray-300 p-2">{item.content}</td>
                             </tr>
-                            <tr className="bg-white">
-                                <td className="border border-gray-300 p-2">2</td>
-                                <td className="border border-gray-300 p-2">두 번째 포스트</td>
-                                <td className="border border-gray-300 p-2">리액트로 게시판을 만들고 있어요!</td>
-                            </tr>
+                            ))}
                         </tbody>
                     </table>
                     <div className='flex justify-center items-center'>
-                        <button type='button' className='bg-gray-400 px-10 py-3 rounded-md'><Link to="/board/boardinsert">글 작성</Link></button>
+                        <button type='button' className='bg-gray-400 px-10 py-3 rounded-md'><Link to="/board/insert">글 작성</Link></button>
                     </div>
                 </div>
             </div>
