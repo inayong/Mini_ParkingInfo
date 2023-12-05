@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 const KakaoMap = () => {
 
     const mapContainer = useRef(null);
-    let mapAddr
+    // let mapAddr
     const [parkData, setParkData] = useState([]);
 
     const getData = () => {
@@ -23,24 +23,29 @@ const KakaoMap = () => {
         getData();
     }, [])
 
-    useEffect(() => {
-        mapAddr = parkData.map((item) => item.address);
-        // console.log("ma", mapAddr)
-    }, [parkData])
+    //초기는 한 지역만 정해서 뿌리기
+
+    const addrGu = parkData.filter((item) => item.gu === '금정구')
+    console.log(addrGu)
+
+    // useEffect(() => {
+    //     mapAddr = parkData.map((item) => item.address);
+    //     // console.log("ma", mapAddr)
+    // }, [parkData])
 
 
 
     useEffect(() => {
         // console.log("daaa", parkData.address)
-        if (parkData.length > 0) {
+        if (addrGu.length > 0) {
             const container = mapContainer.current;
             const options = {
-                center: new window.kakao.maps.LatLng(35.157759003, 129.059317193),
-                level: 3,
+                center: new window.kakao.maps.LatLng(35.22047, 129.086585),  //온천장역
+                level: 5,
             };
             const map = new window.kakao.maps.Map(container, options);
 
-            parkData.forEach((item) => {
+            addrGu.forEach((item) => {
                 const geocoder = new window.kakao.maps.services.Geocoder();
 
                 geocoder.addressSearch(item.address, function (
@@ -79,17 +84,17 @@ const KakaoMap = () => {
                              
                         });
 
-                        map.setCenter(coords);
+                        // map.setCenter(coords); //
                     }
                 });
             });
         }
-    }, [parkData]);
+    }, [addrGu]);
 
     return (
         <div>
             <div>KakaoMap2</div>
-            <div id="map" style={{ width: '1000px', height: '900px' }} ref={mapContainer}></div>
+            <div id="map" style={{ width: '1500px', height: '900px' }} ref={mapContainer}></div>
         </div>
     )
 }

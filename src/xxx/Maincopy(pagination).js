@@ -12,32 +12,40 @@ const Main = () => {
     const sel2Ref = useRef();
     const [selGu, setSelGu] = useState([]);
     const [selDong, setSelDong] = useState([]);
+    const [searInfo, setSearInfo] = useState([]);
+
+    //페이징
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const displayData = searInfo.slice(startIndex, endIndex);
 
 
-    //sel
-    const [searData, setSearData] = useState([]);
-    const [gu, setGu] = useState('');
-    const [dong, setDong] = useState('');
-    const [prkPlaceNm, setPrkPlaceNm] = useState();
-    const parkingNm = useRef();
 
-    //sel fetch
-    const selData = () => {
+    //fetch
+    const getData = () => {
+
         fetch("http://10.125.121.217:8080/parking/refer")
             .then(resp => resp.json())
             .then(data => {
                 setParkData(data)
+                // console.log(data)
             })
             .catch(err => console.log(err))
     }
+
     useEffect(() => {
-        selData();
+        getData();
     }, [])
 
-    //sel
+    //option
     const addGu = [...new Set(parkData.map((item) => item.gu))];
     const addrGu = [...addGu].sort();
     // console.log(addrGu)
+
+
+    //option 선택
     const handleSel1 = () => {
         // console.log(selRef.current.value)
         if (selRef.current.value === '') return;
@@ -45,8 +53,12 @@ const Main = () => {
         let selgu = parkData.filter((item) => item.gu === selRef.current.value);
         // console.log("gu", selgu)
         setSelGu(selgu);
-        setGu(selRef.current.value);
+
+
     }
+
+    // console.log("guuuu", selGu)
+
     const addDong = [...new Set(selGu.map(item => item.dong))];
     const addrDong = [...addDong].sort();
     // console.log("dong", addrDong)
@@ -58,49 +70,46 @@ const Main = () => {
         let seldong = selGu.map((item) => item.dong === sel2Ref.current.value);
         setSelDong(seldong)
         // console.log("dong", seldong)
-        setDong(sel2Ref.current.value);
     }
 
-    //search
-    //fetch
-    const searchData = () => {
+    const searchClick = (e) => {
+        e.preventDefault();
+        const selGuValue = selRef.current.value; // 선택된 '구' 값
+        const selDongValue = sel2Ref.current.value; // 선택된 '동' 값
+        // console.log("selGuValue", selGuValue)
+        // console.log("selDongValue", selDongValue)
 
-        const url = `http://10.125.121.217:8080/parking/paging?gu=${gu}&prkPlaceNm=${prkPlaceNm}&dong=${dong}`;
-        // fetch(`http://10.125.121.217:8080/parking/paging?gu=${gu}&dong=?${dong}&prkPlaceNm=${prkPlaceNm}`)
-        // console.log("url", url)
-        fetch(url)
-            .then(resp => resp.json())
-            .then(data => {
-                setSearData(data)
-                // console.log(data)
-            })
-            .catch(err => console.log(err))
+        let searGuDong = parkData.filter((item) => {
+            if (!selDongValue) {
+                return item.gu === selGuValue;
+            } else {
+                return item.gu === selGuValue && item.dong === selDongValue;
+            }
+        });
+        // console.log("info", searGuDong)
+        setSearInfo(searGuDong);
     }
 
+    // console.log("info", searInfo)
 
-    //option
-    // console.log(parkData)
-    useEffect(() => {
-        searchData();
-    }, [prkPlaceNm])
-
+    //검색기능
 
     const handleSearch = (e) => {
-        e.preventDefault();
-        // console.log("search", parkingNm.current.value)
-
-        setPrkPlaceNm(parkingNm.current.value)
-        // console.log("Nm", prkPlaceNm)
+        // e.preventDefault();
+        // console.log(e.target.value)
+        let searPrkNm = parkData.filter((item) =>
+            item.prkPlaceNm.includes(e.target.value) || item.address.includes(e.target.value)
+        );
+        // console.log("search", searPrkNm)
+        setSearInfo(searPrkNm);
     }
 
-    // console.log("searData", searData.content)
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    }
 
-    const search = searData.content
-    // console.log("searData", search[0])
-    // search.forEach(item => {
-    //     console.log(item.id); // 각 요소의 내용을 출력합니다.
-    //   });
-    // console.log("test",search.map(item => item.id))
+
+    console.log("info", searInfo)
 
 
     return (
@@ -115,8 +124,8 @@ const Main = () => {
                     <div className='flex-none w-1/5'></div>
                     <div className='w-3/5 bg-white shadow-xl rounded-2xl'>
                         <div className='relative flex justify-center pt-12 pb-2'>
-                            <div className='pr-1'>
-                                <select onChange={handleSel1} ref={selRef} className='font-omyupretty text-lg bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-ftablel p-2.5 '>
+                            <div>
+                                <select onChange={handleSel1} ref={selRef} className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-ftablel p-2.5 '>
                                     <option value=''>--구--</option>
                                     {addrGu.map((address) => (
                                         <option key={address} value={address}>
@@ -125,8 +134,8 @@ const Main = () => {
                                     ))}
                                 </select>
                             </div>
-                            <div className='pl-1'>
-                                <select onChange={handleSel2} ref={sel2Ref} className='font-omyupretty text-lg bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-ftablel p-2.5 '>
+                            <div>
+                                <select onChange={handleSel2} ref={sel2Ref} className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-ftablel p-2.5 '>
                                     <option value=''>--동--</option>
                                     {addrDong.map((address) => (
                                         <option key={address} value={address}>
@@ -135,38 +144,30 @@ const Main = () => {
                                     ))}
                                 </select>
                             </div>
+                            <button type="submit" onClick={searchClick} className="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                                <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                </svg>
+                                <span className="sr-only">Search</span>
+                            </button>
                         </div>
                         <div className='relative flex justify-center'>
                             <form className="flex items-center">
                                 <label htmlFor="simple-search" className="sr-only">Search</label>
                                 <div className="relative w-ftablel">
-                                    {/* <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"> */}
                                     <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                                         <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                         </svg>
                                     </div>
-                                    {/* <input type="text" ref={parkingNm} onChange={handleSearch} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-ftablel ps-10 p-2.5 " placeholder="주차장명 검색" /> */}
-                                    <input type="text" ref={parkingNm} className=" font-omyupretty text-lg bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-ftablel ps-10 p-2.5 " placeholder="주차장명 검색" />
-                                    {/* <button onClick={handleSearch} className="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
-                                            <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                                            </svg>
-                                            <span className="sr-only">Search</span>
-                                        </button> */}
+                                    <input type="text" onChange={handleSearch} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-ftablel ps-10 p-2.5 " placeholder="주차장명 검색" />
                                 </div>
-                                <button onClick={handleSearch} className="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
-                                    <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                                    </svg>
-                                    <span className="sr-only">Search</span>
-                                </button>
                             </form>
                         </div>
                         <div className="flex pt-5">
                             <div className="flex-none w-1/6 "></div>
                             <div className="grow relative overflow-x-auto shadow-md sm:rounded-lg">
-                                {searData && Array.isArray(search) && search.length > 0 ? (
+                                {searInfo && searInfo.length > 0 ? (
                                     <table className='table-auto w-full text-center  border border-gray-300'>
                                         <thead className='bg-slate-300 '>
                                             <tr>
@@ -177,18 +178,21 @@ const Main = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {search.map((item) => (
-                                                <tr className='border-b'>
-                                                    <td className='px-6 py-4'>{item.id}</td>
-                                                    <td className='px-6 py-4 hover:underline'><Link to={`parking/detail/${item.prkPlaceNm}`}>{item.prkPlaceNm}</Link></td>
-                                                    <td className='px-6 py-4'>{item.address}</td>
-                                                    <td className='px-6 py-4'>{item.phoneNumber}</td>
+                                            {displayData.map((items) => (
+                                                <tr key={items.id} className='border-b'>
+                                                    <td className='px-6 py-4'>{items.id}</td>
+                                                    <td className='px-6 py-4 hover:underline'><Link to={`parking/detail/${items.prkPlaceNm}`}>{items.prkPlaceNm}</Link></td>
+                                                    <td className='px-6 py-4'>{items.address}</td>
+                                                    <td className='px-6 py-4'>{items.phoneNumber}</td>
                                                 </tr>
                                             ))}
                                         </tbody>
                                     </table>
                                 ) : (
-                                    <p className='text-center font-omyupretty text-lg'>'구' 또는 '동'을 선택해주시거나 주차장명을 검색해주세요.</p>
+                                    <p className='text-center'>'구' 또는 '동'을 선택해주시거나 주차장명을 검색해주세요.</p>
+                                )}
+                                {searInfo.length > 0 && (
+                                    <Pagination activePage={currentPage} itemsCountPerPage={itemsPerPage} totalItemsCount={searInfo.length} pageRangeDisplayed={5} onChange={handlePageChange} />
                                 )}
                             </div>
                             <div className="flex-none w-1/6 "></div>
@@ -197,7 +201,7 @@ const Main = () => {
                     <div className='flex-none w-1/5'></div>
                 </div>
             </section>
-            <section className="bg-gray-50 py-5 h-screen">
+            <section className="bg-gray-300 py-5 h-screen">
                 <div>
                     <div className='flex justify-center pt-36'>
                         지도

@@ -7,6 +7,8 @@ module.exports = {
       KCCGanpan: ["KCC-Ganpan"],
       EFwatermelonSalad: ["EF_watermelonSalad"],
       HakgyoansimWoojuR: ["HakgyoansimWoojuR"],
+      SUITERegular: ["SUITE-Regular"],
+      omyupretty: ["omyu_pretty"],
     },
     // colors: {
     //   'header': '#D7DDBE',

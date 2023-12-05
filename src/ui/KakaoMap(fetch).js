@@ -64,7 +64,7 @@ const KakaoMap = () => {
                         });
                         infowindow.open(map, marker);
 
-                        map.setCenter(coords);
+                        map.setCenter(coords); //첫 번째 요소의 주소를 검색하여 해당 위치를 지도의 중심으로 설정하고, 해당 위치에 마커를 추가합니다. 주소를 검색하여 좌표를 찾을 때마다 지도의 중심을 그 좌표로 설정하게 됩니다.
                     }
                 });
             });

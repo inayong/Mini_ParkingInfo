@@ -56,7 +56,7 @@ const LoginPage = () => {
                     <div
                         className="absolute inset-0 bg-gradient-to-r from-blue-900 to-sky-900 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
                     </div>
-                    <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20 ">
+                    <div className="relative px-4 bg-white shadow-lg sm:rounded-3xl sm:p-20 ">
                         <div className="max-w-md mx-auto">
                             <div>
                                 <h1 className="text-2xl font-semibold">Login</h1>
@@ -76,8 +76,8 @@ const LoginPage = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className='flex'>
-                                <p className='text-gray-400 text-xs pt-3'>회원이 아니시면...</p>
+                            <div className='flex '>
+                                <p className='text-gray-400 text-xs pt-1'>회원이 아니시면...</p>
                                 <p className="text-gray-400 underline text-sm"><Link to='/signup'>회원가입</Link></p>
                             </div>
                         </div>

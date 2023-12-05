@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import MainPage from './page/MainPage';
 import Login from './page/Login';
 import HeaderMenu from './ui/HeaderMenu';
+// import Main from './page/Maincopy';
 import Main from './page/Main';
 import FooterMenu from './ui/FooterMenu';
 import Board from './page/Board';
@@ -30,13 +31,13 @@ function App() {
             <Route path='/signup' element={<SignUp />}></Route>
             <Route path='/board' element={<Board />}></Route>
             <Route path='/board/insert' element={<BoardInsert />}></Route>
-            <Route path='/board/detail' element={<BoardDetail />}></Route>
+            <Route path='/board/detail/:boardId' element={<BoardDetail />}></Route>
             <Route path='/parking' element={<Parking />}></Route>
             <Route path='/parking/detail/:parkingName' element={<ParkingDetail />}></Route>
             <Route path='/parkingfee' element={<ParkingFee />}></Route>
             <Route path='/infomain' element={<InfoMain />}></Route>
           </Routes>
-
+          
           <FooterMenu />
         </BrowserRouter>
       </RecoilRoot>
