@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Logout from "../page/Logout";
+import Logout from "../page/login/Logout";
 import { LogAtom } from "../page/login/LogAtom";
 import { useRecoilState } from "recoil";
 import { TbParking } from "react-icons/tb";
@@ -8,6 +8,8 @@ import { TbParking } from "react-icons/tb";
 const HeaderMenu = () => {
   const [userName, setuserName] = useState(null);
   const [isLogAtom, setIsLogAtom] = useRecoilState(LogAtom);
+
+  console.log("user", userName)
 
   useEffect(() => {
     setuserName(localStorage.getItem("username"))

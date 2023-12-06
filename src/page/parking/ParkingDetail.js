@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
+import DetailMap from '../../comm/DetailMap';
 
 
 const ParkingDetail = () => {
@@ -9,7 +10,7 @@ const ParkingDetail = () => {
 
   const [parkDetail, setParkDetail] = useState();
 
-  console.log("params", parkingName)
+  // console.log("params", parkingName)
 
   useEffect(() => {
     const fetchParkDetail = () => {
@@ -24,23 +25,24 @@ const ParkingDetail = () => {
     fetchParkDetail();
   }, [parkingName])
 
-  console.log("detail", parkDetail)
+  // console.log("detail", parkDetail)
 
   // 보류 : 급지구분
 
-  // 주차장명, 구분, 주소, 구획수, 전화번호
-  //  운영요일, 오픈&종료시간, 
-  //  요금, 기본시간, 기본요금, 추가시간&요금 결제방법
-  //  1일 주차권, 월 주차
+  
 
   return (
     <main>
       { parkDetail && <div className='pt-5 h-screen'>
-        <div>
-          map
+        <div className='pl-96 pr-96 text-3xl font-bold font-HakgyoansimWoojuR'>
+          {parkDetail.prkPlaceNm}
+          <div className='border-b-2 border-black pt-3'></div>
+        </div>
+        <div className='flex justify-center'>
+          {/* <DetailMap addr={parkDetail.address} name={parkDetail.prkPlaceNm}/> */}
         </div>
         <div className='flex pt-5 grow relative justify-center'>
-          <table className='table-auto w-3/5 text-center shadow-md border-separate rounded-[20px] overflow-hidden'>
+          <table className='table-auto w-3/5 text-center font-GmarketSansMedium shadow-md border-separate rounded-[20px] overflow-hidden'>
             <thead className='bg-gray-200 '>
               <tr>
                 <th className='px-6 py-3'>주차장명</th>
@@ -62,7 +64,7 @@ const ParkingDetail = () => {
           </table>
         </div>
         <div className='flex pt-10 grow relative justify-center'>
-          <table className='table-auto w-3/5 text-center shadow-md border-separate rounded-[20px] overflow-hidden'>
+          <table className='table-auto w-3/5 text-center font-GmarketSansMedium shadow-md border-separate rounded-[20px] overflow-hidden'>
             <thead className='bg-gray-200'>
               <tr>
                 <th className='px-6 py-3'>운영요일</th>
@@ -88,7 +90,7 @@ const ParkingDetail = () => {
           </table>
         </div>
         <div className='flex pt-10 grow relative justify-center'>
-          <table className='table-auto w-3/5 text-center shadow-md border-separate rounded-[20px] overflow-hidden'>
+          <table className='table-auto w-3/5 text-center font-GmarketSansMedium shadow-md border-separate rounded-[20px] overflow-hidden'>
             <thead className='bg-gray-200'>
               <tr>
                 <th className='px-6 py-3'>요금정보</th>
@@ -112,7 +114,7 @@ const ParkingDetail = () => {
           </table>
         </div>
         <div className='flex pt-10 grow relative justify-center'>
-          <table className='table-auto w-3/5 text-center shadow-md border-separate rounded-[20px] overflow-hidden'>
+          <table className='table-auto w-3/5 text-center font-GmarketSansMedium shadow-md border-separate rounded-[20px] overflow-hidden mb-20'>
             <thead className='bg-gray-200'>
               <tr>
                 <th className='px-6 py-3'>1일 주차권 요금</th>

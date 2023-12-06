@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { LogAtom } from './login/LogAtom';
+import { LogAtom } from './LogAtom';
 import { useRecoilState } from 'recoil';
 
 const LoginPage = () => {
@@ -13,7 +13,7 @@ const LoginPage = () => {
     const navigate = useNavigate();
 
     const handleLogin = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
 
         if (userName === "") {
             alert("아이디를 입력 해주세요.")

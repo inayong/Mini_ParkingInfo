@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { LogAtom } from '../page/login/LogAtom';
+import { LogAtom } from './LogAtom';
 
 const Logout = ({userName}) => {
     const navigate = useNavigate();
@@ -12,7 +12,7 @@ const Logout = ({userName}) => {
     // const inputValue = inputUserName.value;
 
     const handleLogout = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         localStorage.removeItem("username");
         localStorage.removeItem("token");
         // setUserName(null);

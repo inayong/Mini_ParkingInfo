@@ -150,7 +150,7 @@ const BoardDetail = () => {
                             <div className='pt-20 pb-10'>
                                 {commList && Array.isArray(commList) && commList.map((item) => (
                                     <div key={item.id} className='bg-slate-300'>
-                                        <div>댓글목록</div>
+                                        <div className='text-lg'>댓글목록</div>
                                         <div>
                                             <div>작성자: {item.username}</div>
                                             <div>내용: {item.content}</div>

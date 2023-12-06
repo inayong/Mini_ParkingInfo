@@ -2,18 +2,18 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import HeaderMenu from './ui/HeaderMenu';
 // import MainPage from './page/MainPage';
-import Login from './page/Login';
-import HeaderMenu from './ui/HeaderMenu';
+import Login from './page/login/Login';
+import HeaderMenu from './comm/HeaderMenu';
 // import Main from './page/Maincopy';
 import Main from './page/Main';
-import FooterMenu from './ui/FooterMenu';
-import Board from './page/Board';
-import BoardInsert from './page/BoardInsert';
-import BoardDetail from './page/BoardDetail';
-import Parking from './page/Parking';
-import SignUp from './page/SignUp';
-import ParkingDetail from './Info/ParkingDetail';
-import ParkingFee from './page/ParkingFee';
+import FooterMenu from './comm/FooterMenu';
+import Board from './page/board/Board';
+import BoardInsert from './page/board/BoardInsert';
+import BoardDetail from './page/board/BoardDetail';
+import Parking from './page/parking/Parking';
+import SignUp from './page/login/SignUp';
+import ParkingDetail from './page/parking/ParkingDetail';
+import ParkingFee from './page/parking/ParkingFee';
 import InfoMain from './realtimeinfo/InfoMain';
 import { RecoilRoot } from 'recoil';
 
@@ -38,7 +38,7 @@ function App() {
             <Route path='/infomain' element={<InfoMain />}></Route>
           </Routes>
           
-          <FooterMenu />
+          {/* <FooterMenu /> */}
         </BrowserRouter>
       </RecoilRoot>
     </div>

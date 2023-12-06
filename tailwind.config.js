@@ -9,6 +9,8 @@ module.exports = {
       HakgyoansimWoojuR: ["HakgyoansimWoojuR"],
       SUITERegular: ["SUITE-Regular"],
       omyupretty: ["omyu_pretty"],
+      NanumSquareNeoVariable: ["NanumSquareNeo-Variable"],
+      GmarketSansMedium: ["GmarketSansMedium"],
     },
     // colors: {
     //   'header': '#D7DDBE',

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import parkingrefer from './parkingrefer.json';
+import parkingrefer from '../ui/parkingrefer.json';
 
 const KakaoMap = () => {
 

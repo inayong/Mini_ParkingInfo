@@ -2,13 +2,13 @@
     display: flex !important;
     justify-content: center;
     margin-top: 15px;
+    font-family: 'SUITE-Regular';
 }
 
 ul.pagination li {
     display: inline-block;
     width: 30px;
-    height: 30px;
-    border: 1px solid #e2e2e2;
+    height: 28px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -30,11 +30,11 @@ ul.pagination li a {
 }
 
 ul.pagination li.active a {
-    color: white;
+    color: black;
 }
 
 ul.pagination li.active {
-    background-color: #337ab7;
+    background-color: #e5e7eb;
 }
 
 ul.pagination li a:hover,

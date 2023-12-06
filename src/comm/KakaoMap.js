@@ -1,10 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const KakaoMap = () => {
 
     const mapContainer = useRef(null);
     // let mapAddr
     const [parkData, setParkData] = useState([]);
+
+    // const rename = name.filter((item) => item)
+
+// console.log("name", name)
 
     const getData = () => {
 
@@ -26,14 +31,14 @@ const KakaoMap = () => {
     //초기는 한 지역만 정해서 뿌리기
 
     const addrGu = parkData.filter((item) => item.gu === '금정구')
-    console.log(addrGu)
+    // console.log("addrGu",addrGu)
 
     // useEffect(() => {
     //     mapAddr = parkData.map((item) => item.address);
     //     // console.log("ma", mapAddr)
     // }, [parkData])
 
-
+    
 
     useEffect(() => {
         // console.log("daaa", parkData.address)
@@ -66,10 +71,14 @@ const KakaoMap = () => {
                             title: item.prkPlaceNm
                         });
 
-                        const iwContent = `<div style="width:150px;text-align:center;padding:6px 0;">${item.prkPlaceNm}</div>`;
+                        const iwContent = `<div style="width:150px;text-align:center;font-family: 'NanumSquareNeo-Variable';padding:6px 0;">
+                        <div>${item.prkPlaceNm}</div>
+                        </div>`;
+                        // const iwRemoveable = true;  //x표시
 
                         const infowindow = new window.kakao.maps.InfoWindow({
-                            content: iwContent
+                            content: iwContent,
+                            // removable: iwRemoveable
                         });
 
                         window.kakao.maps.event.addListener(marker, 'mouseover', function () {
@@ -81,10 +90,13 @@ const KakaoMap = () => {
                         })
 
                         window.kakao.maps.event.addListener(marker, 'click', function () {
-                             
+                            // infowindow.open(map, marker); 
+                            // const url = `<Link to={parking/detail/${name}></Link>`;
+                            // window.open(url);
+                            window.location.href = `parking/detail/${item.prkPlaceNm}`
                         });
 
-                        // map.setCenter(coords); //
+                        // map.setCenter(coords);
                     }
                 });
             });
@@ -93,7 +105,6 @@ const KakaoMap = () => {
 
     return (
         <div>
-            <div>KakaoMap2</div>
             <div id="map" style={{ width: '1500px', height: '900px' }} ref={mapContainer}></div>
         </div>
     )

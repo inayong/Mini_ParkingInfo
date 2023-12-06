@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { GoSearch } from "react-icons/go";
 import { Link, json } from 'react-router-dom';
 import KakaoMap from '../comm/KakaoMap';
 import Pagination from 'react-js-pagination';
@@ -19,7 +20,6 @@ const Main = () => {
     const [dong, setDong] = useState('');
     const [prkPlaceNm, setPrkPlaceNm] = useState();
     const parkingNm = useRef();
-    const [page, setPage] = useState(0);
 
     //sel fetch
     const selData = () => {
@@ -65,15 +65,13 @@ const Main = () => {
     //fetch
     const searchData = () => {
 
-        const url = `http://10.125.121.217:8080/parking/paging?gu=${gu}&dong=${dong}&prkPlaceNm=${prkPlaceNm}&page=${page}`;
+        const url = `http://10.125.121.217:8080/parking/paging?gu=${gu}&prkPlaceNm=${prkPlaceNm}&dong=${dong}`;
         // console.log("url", url)
         fetch(url)
             .then(resp => resp.json())
             .then(data => {
                 setSearData(data)
-                // setPSize(searData.size)
-                // setTotalPage(searData.totalElements)
-                console.log(data)
+                // console.log(data)
             })
             .catch(err => console.log(err))
     }
@@ -83,7 +81,7 @@ const Main = () => {
     // console.log(parkData)
     useEffect(() => {
         searchData();
-    }, [prkPlaceNm, gu, dong, page])
+    }, [prkPlaceNm])
 
 
     const handleSearch = (e) => {
@@ -99,24 +97,12 @@ const Main = () => {
 
     const search = searData.content
 
-    //페이지
-    // const [page, setPage] = useState(0); //현재페이지
-    const psize = searData.size //보여줄 개수
-    const totalpage = searData.totalElements //전체 개수
-    console.log("size, total", psize, totalpage)
-
     
-    const handlePageChange = (page) => {
-        setPage(page);
-        // console.log("page",page);
-    }
 
-    // const mapName = parkData.map((item) => item.prkPlaceNm);
-    // console.log("mapName", mapName)
 
     return (
-        <main className='flex flex-col bg-gray-50'>
-            <section className="py-10 h-screen ">
+        <main className='flex flex-col bg-slate-500'>
+            <section className=" bg-gray-50 py-10 h-screen ">
                 <div className='flex justify-between pb-5'></div>
                 <div className='flex h-full pb-10'>
                     <div className='flex-none w-1/5'></div>
@@ -155,10 +141,9 @@ const Main = () => {
                                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                         </svg>
                                     </div>
-                                    <input type="text" ref={parkingNm} className=" font-omyupretty text-lg bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-ftablel ps-10 p-2.5 " placeholder="주차장명 검색" />
                                     {/* <input type="text" ref={parkingNm} onChange={handleSearch} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-ftablel ps-10 p-2.5 " placeholder="주차장명 검색" /> */}
+                                    <input type="text" ref={parkingNm} className=" font-omyupretty text-lg bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-ftablel ps-10 p-2.5 " placeholder="주차장명 검색" />
                                 </div>
-                                {/* <button type='submit' className="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 "> */}
                                 <button onClick={handleSearch} className="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
                                     <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
@@ -192,13 +177,8 @@ const Main = () => {
                                         </tbody>
                                     </table>
                                 ) : (
-                                    <p className='text-center font-omyupretty text-lg pt-5'>'구' 또는 '동'을 선택해주시거나 주차장명을 검색해주세요.</p>
+                                    <p className='text-center font-omyupretty text-lg'>'구' 또는 '동'을 선택해주시거나 주차장명을 검색해주세요.</p>
                                 )}
-                                <div className='pt-3 pb-3'>
-                                {searData && Array.isArray(searData.content) && searData.content.length > 0 && (
-                                    <Pagination activePage={page} itemsCountPerPage={psize} totalItemsCount={totalpage} pageRangeDisplayed={5} onChange={handlePageChange} />
-                                )}
-                                </div>
                             </div>
                             <div className="flex-none w-1/6 "></div>
                         </div>
@@ -206,12 +186,10 @@ const Main = () => {
                     <div className='flex-none w-1/5'></div>
                 </div>
             </section>
-            <section className="py-5 h-screen mb-20">
+            <section className="bg-gray-50 py-5 h-screen">
                 <div>
-                    <div className='flex justify-center pt-20 text-3xl font-EFwatermelonSalad font-bold'>
-                        주차장 위치보기
-                    </div>
-                    <div className='flex justify-center pt-10'>
+                    <div className='flex justify-center pt-36'>
+                        지도
                         {/* <KakaoMap /> */}
                     </div>
                     <div>
