@@ -6,10 +6,10 @@ const DetailMap = ({ addr, name }) => {
     // console.log(addr)
 
     const address = addr.split(",")[0];
-    console.log(address)
+    // console.log(address)
 
     const rename = name.replace('주차장', '');
-    console.log(rename)
+    // console.log(rename)
 
     useEffect(() => {
         const container = mapContainer.current;
@@ -21,14 +21,21 @@ const DetailMap = ({ addr, name }) => {
 
         const geocoder = new window.kakao.maps.services.Geocoder();
 
+        const imageSrc = 'https://i.ibb.co/cXKry8p/free-icon-location-pointer-2098567.png';
+        const imagesSize = new window.kakao.maps.Size(50,50);
+        const imageOption = {offset: new window.kakao.maps.Point(27, 50)};
+        const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imagesSize, imageOption);
+
         geocoder.addressSearch(address, function(result, status) {
 
             if (status === window.kakao.maps.services.Status.OK) {
                 const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
 
+
                 const marker = new window.kakao.maps.Marker({
                     map: map,
-                    position: coords
+                    position: coords,
+                    image: markerImage,
                 });
 
                 var infowindow = new window.kakao.maps.InfoWindow({
@@ -50,7 +57,7 @@ const DetailMap = ({ addr, name }) => {
 
   return (
     <div className='pt-10 pb-5'>
-        <div id='map' style={{ width:'1200px', height: '500px'}} ref={mapContainer}></div>
+        <div id='map' style={{ width:'1000px', height: '500px'}} ref={mapContainer}></div>
     </div>
   )
 }

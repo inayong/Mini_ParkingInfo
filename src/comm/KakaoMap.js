@@ -38,7 +38,11 @@ const KakaoMap = () => {
     //     // console.log("ma", mapAddr)
     // }, [parkData])
 
-    
+
+    const imageSrc = 'https://i.ibb.co/t2Z1m1n/mechanics.png';
+        const imagesSize = new window.kakao.maps.Size(50,50);
+        const imageOption = {offset: new window.kakao.maps.Point(27, 50)};
+        const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imagesSize, imageOption);
 
     useEffect(() => {
         // console.log("daaa", parkData.address)
@@ -68,7 +72,8 @@ const KakaoMap = () => {
                         const marker = new window.kakao.maps.Marker({
                             map: map,
                             position: coords,
-                            title: item.prkPlaceNm
+                            title: item.prkPlaceNm,
+                            image: markerImage,
                         });
 
                         const iwContent = `<div style="width:150px;text-align:center;font-family: 'NanumSquareNeo-Variable';padding:6px 0;">

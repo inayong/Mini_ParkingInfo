@@ -1,25 +1,58 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 // import {ReactComponent as Carsignup} from '../ui/images/CarSignup.svg';
 import { FaCarTunnel } from "react-icons/fa6";
+import { useNavigate } from 'react-router-dom';
 
 
 const SignUp = () => {
+    const navigate = useNavigate();
 
     const [name, setName] = useState("");
     const [id, setId] = useState("");
-    const [Password, setPassword] = useState("");
+    const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
+    const register = () => {
+
+        fetch("http://10.125.121.217:8080/user/join", {
+                method: "post",
+                headers: {
+                    'Content-Type': 'application/json',
+                    },
+                body: JSON.stringify({
+                    "nickname": name,
+                    "username": id,
+                    "password": password,
+                    "checkPassword": confirmPassword
+                }),
+            })
+            .then((resp) => {
+                console.log(resp);
+                alert("회원가입 완료");
+                if ((resp.status === 200)) {
+                    navigate("/");
+                }
+            })
+            .catch((err) => {
+                console.log("error", err)
+            })
+    };
+
     const handleName = (e) => {
+        // console.log("이름",e.target.value)
         setName(e.target.value);
     }
     const handleId = (e) => {
+        // console.log("아이디",e.target.value)
         setId(e.target.value);
     }
     const handlePassword = (e) => {
+        // console.log("비번",e.target.value)
         setPassword(e.target.value);
     }
     const handleConfirmPassword = (e) => {
+        // console.log("확인",e.target.value)
         setConfirmPassword(e.target.value);
     }
 
@@ -96,7 +129,7 @@ const SignUp = () => {
                                 </div> */}
                                 <div className="flex -mx-3">
                                     <div className="w-full px-3 mb-5">
-                                        <button className="block w-full max-w-xs mx-auto bg-blue-800 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">REGISTER NOW</button>
+                                        <button onClick={register} className="block w-full max-w-xs mx-auto bg-blue-800 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">REGISTER NOW</button>
                                     </div>
                                 </div>
                             </div>

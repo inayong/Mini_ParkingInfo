@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { LogAtom } from './LogAtom';
 import { useRecoilState } from 'recoil';
@@ -12,9 +12,13 @@ const LoginPage = () => {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        
+    }, [])
+
     const handleLogin = (e) => {
         // e.preventDefault();
-
+        
         if (userName === "") {
             alert("아이디를 입력 해주세요.")
         } else if (passWord === "") {
@@ -31,13 +35,19 @@ const LoginPage = () => {
                     // const tokentest = resp.headers.get("Authorization");
                     // console.log(tokentest);
                     // console.log(resp)
+                    
                     if (resp.status === 200) {
                         localStorage.setItem("token", resp.headers.get("Authorization"))
                         localStorage.setItem("username", userName)
                         setIsLogAtom(true);
                         navigate("/");
                     } else {
-                        alert("아이디 및 비밀번호를 다시 확인해주세요.")
+                        if (localStorage.getItem("username")) {
+                            setIsLogAtom(localStorage.getItem("username"))
+                        }
+                        else {
+                            alert("아이디 및 비밀번호를 다시 확인해주세요.")
+                        }
                     }
                 })
                 .catch((err) => {

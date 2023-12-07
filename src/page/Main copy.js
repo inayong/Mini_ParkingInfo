@@ -41,7 +41,7 @@ const Main = () => {
     const addDong = [...new Set(selGu.map(item => item.dong))];
     const addrDong = [...addDong].sort();
     // console.log("dong", addrDong)
-
+    
     const handleSel1 = () => {
         // console.log(selRef.current.value)
         if (selRef.current.value === '') return;
@@ -49,7 +49,7 @@ const Main = () => {
         let selgu = parkData.filter((item) => item.gu === selRef.current.value);
         // console.log("gu", selgu)
         setSelGu(selgu);
-        setGu(selRef.current.value);
+        // setGu(selRef.current.value);
     }
 
     const handleSel2 = () => {
@@ -59,7 +59,7 @@ const Main = () => {
         let seldong = selGu.map((item) => item.dong === sel2Ref.current.value);
         setSelDong(seldong)
         // console.log("dong", seldong)
-        setDong(sel2Ref.current.value);
+        // setDong(sel2Ref.current.value);
     }
 
     //search
@@ -93,11 +93,30 @@ const Main = () => {
         // setGu(selRef.current.value);
         // setDong(sel2Ref.current.value);
 
-        setPrkPlaceNm(parkingNm.current.value);
+        // setPrkPlaceNm(// 옵션 값이 없거나 검색어가 없을 때는 선택된 옵션 값으로 검색);
         // console.log("Nm", prkPlaceNm)
 
-    }
+        if ((selRef.current.value || sel2Ref.current.value) && sel2Ref.current.value.trim() !== '') {
+            // 옵션 값이 있을 때는 검색어를 무시하고 옵션 값만 사용
+             // 옵션 값이 있을 때는 옵션 값을 초기화하여 검색어로만 검색
+              // 옵션 값과 검색어가 모두 있을 때는 옵션 값을 초기화하여 검색어로만 검색
+            setGu('');
+            setDong('');
+            setPrkPlaceNm(parkingNm.current.value);
+        } else {
+            // 옵션 값이 있고 검색어도 있을 때는 검색어로만 검색
+            // 옵션 값이 없거나 검색어가 없을 때는 선택된 옵션 값으로 검색
+            // 옵션 값이 없거나 검색어가 없을 때는 선택된 옵션 값으로 검색
+            setGu(selRef.current.value);
+            setDong(sel2Ref.current.value);
+            setPrkPlaceNm(''); // 검색어 초기화하여 무시
+        }
 
+        setPage(0);
+
+        searchData();
+    }
+    
 
     // console.log("searData", searData.content)
 
@@ -109,7 +128,7 @@ const Main = () => {
     const totalpage = searData.totalElements //전체 개수
     console.log("size, total", psize, totalpage)
 
-
+    
     const handlePageChange = (page) => {
         setPage(page);
         // console.log("page",page);
@@ -118,18 +137,15 @@ const Main = () => {
     // const mapName = parkData.map((item) => item.prkPlaceNm);
     // console.log("mapName", mapName)
 
-    
-
     return (
         <main className='flex flex-col bg-gray-50'>
             <section className="py-10 h-screen ">
                 <div className='flex justify-between pb-5'></div>
                 <div className='flex h-full pb-10'>
                     <div className='flex-none w-1/5'></div>
-                    {/* <div className='w-3/5 bg-white shadow-xl rounded-2xl overflow-auto' style={{backgroundImage: `url("https://i.ibb.co/v34BKSg/parkingimage2.png")`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: '120%'}}> */}
-                    <div className='w-3/5 bg-white shadow-xl rounded-2xl overflow-auto'>
+                    <div className='w-3/5 bg-white shadow-xl rounded-2xl'>
                         <div>
-                            <div className='text-center pt-5 font-bold font-EFwatermelonSalad text-3xl'>주차장 검색하기</div>
+                            <h3 className='text-center pt-5 font-bold font-EFwatermelonSalad text-lg'>주차장 검색하기</h3>
                         </div>
                         <div className='relative flex justify-center pt-5 pb-2 sm:text-xs'>
                             <div className='pr-1'>
@@ -176,46 +192,35 @@ const Main = () => {
                         </div>
                         <div className="flex pt-10">
                             <div className="flex-none w-1/6 "></div>
-                            <div className="grow relative overflow-x-auto">
-                                {!gu && !dong && !prkPlaceNm && (
-                                    <p className='text-center font-omyupretty text-lg pt-5'>
-                                        '구' 또는 '동'을 선택해주시거나 주차장명을 검색해주세요.
-                                    </p>
-                                )}
-                                {gu || dong || prkPlaceNm ? (
-                                    searData && Array.isArray(search) && search.length > 0 ? (
-                                        <table className='table-auto w-full text-center font-SUITERegular border border-gray-300'>
-                                            <thead className='bg-slate-300'>
-                                                <tr>
-                                                    <th className='px-6 py-5'>No.</th>
-                                                    <th className='px-6 py-5'>주차장명</th>
-                                                    <th className='px-6 py-5'>주소</th>
-                                                    <th className='px-6 py-5'>전화번호</th>
+                            <div className="grow relative overflow-x-auto shadow-md">
+                                {searData && Array.isArray(search) && search.length > 0 ? (
+                                    <table className='table-auto w-full text-center font-SUITERegular border border-gray-300'>
+                                        <thead className='bg-slate-300'>
+                                            <tr>
+                                                <th className='px-6 py-5'>No.</th>
+                                                <th className='px-6 py-5'>주차장명</th>
+                                                <th className='px-6 py-5'>주소</th>
+                                                <th className='px-6 py-5'>전화번호</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {search.map((item) => (
+                                                <tr key={item.id} className='border-b'>
+                                                    <td className='px-6 py-4 '>{item.id}</td>
+                                                    <td className='px-6 py-4 hover:underline'><Link to={`parking/detail/${item.prkPlaceNm}`}>{item.prkPlaceNm}</Link></td>
+                                                    <td className='px-6 py-4'>{item.address}</td>
+                                                    <td className='px-6 py-4'>{item.phoneNumber}</td>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
-                                                {searData.content.map((item) => (
-                                                    <tr key={item.id} className='border-b'>
-                                                        <td className='px-6 py-4 '>{item.id}</td>
-                                                        <td className='px-6 py-4 hover:underline'>
-                                                            <Link to={`parking/detail/${item.prkPlaceNm}`}>{item.prkPlaceNm}</Link>
-                                                        </td>
-                                                        <td className='px-6 py-4'>{item.address}</td>
-                                                        <td className='px-6 py-4'>{item.phoneNumber}</td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    ) : (
-                                        <p className='text-center font-omyupretty text-lg pt-5'>
-                                            검색 결과가 없습니다.
-                                        </p>
-                                    )
-                                ) : null}
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                ) : (
+                                    <p className='text-center font-omyupretty text-lg pt-5'>'구' 또는 '동'을 선택해주시거나 주차장명을 검색해주세요.</p>
+                                )}
                                 <div className='pt-3 pb-3'>
-                                    {searData && Array.isArray(searData.content) && searData.content.length > 0 && (
-                                        <Pagination activePage={page} itemsCountPerPage={psize} totalItemsCount={totalpage} pageRangeDisplayed={5} onChange={handlePageChange} />
-                                    )}
+                                {searData && Array.isArray(searData.content) && searData.content.length > 0 && (
+                                    <Pagination activePage={page} itemsCountPerPage={psize} totalItemsCount={totalpage} pageRangeDisplayed={5} onChange={handlePageChange} />
+                                )}
                                 </div>
                             </div>
                             <div className="flex-none w-1/6 "></div>
@@ -224,13 +229,16 @@ const Main = () => {
                     <div className='flex-none w-1/5'></div>
                 </div>
             </section>
-            <section className="py-5 h-screen mb-52">
+            <section className="py-5 h-screen mb-20">
                 <div>
                     <div className='flex justify-center pt-20 text-3xl font-EFwatermelonSalad font-bold'>
                         주차장 위치보기
                     </div>
                     <div className='flex justify-center pt-10'>
-                        <KakaoMap />
+                        {/* <KakaoMap /> */}
+                    </div>
+                    <div>
+
                     </div>
                 </div>
             </section>

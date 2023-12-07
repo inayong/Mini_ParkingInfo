@@ -31,13 +31,6 @@ const Parking = () => {
 
   // console.log(parkData)
 
-  // const handlePageChange = (pageNum) => {
-  //   if (pageNum > currentPage && pageNum % pageRange === 1) {
-  //     setCurrentPage(currentPage + pageRange);
-  //   } else {
-  //     setCurrentPage(pageNum);
-  //   }
-  // }
   const handlePageChange = (pageNum) => {
     setCurrentPage(pageNum);
 
@@ -46,10 +39,13 @@ const Parking = () => {
   return (
     <main>
       <div className='h-screen'>
-        <div className='h-1/6'></div>
+        <div className='h-1/6 '>
+          <div className='flex justify-center items-center pt-20 font-bold text-3xl font-NanumSquareNeoVariable'>주차장 전체 목록</div>
+        </div>
         <div className='h-4/6'>
+          
           <div className='flex justify-center rounded-2xl'>
-            <table className='w-3/5 text-center bg-white'>
+            <table className='w-3/5 text-center bg-white font-GmarketSansMedium'>
               <thead className='border-b border-black bg-blue-100 '>
                 <tr className=''>
                   <th className='px-6 py-5'>No.</th>

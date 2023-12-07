@@ -34,16 +34,16 @@ const ParkingDetail = () => {
   return (
     <main>
       { parkDetail && <div className='pt-5 h-screen'>
-        <div className='pl-96 pr-96 text-3xl font-bold font-HakgyoansimWoojuR'>
+        <div className='pt-10 pl-96 pr-96 text-3xl font-bold font-HakgyoansimWoojuR'>
           {parkDetail.prkPlaceNm}
           <div className='border-b-2 border-black pt-3'></div>
         </div>
-        <div className='flex justify-center'>
-          {/* <DetailMap addr={parkDetail.address} name={parkDetail.prkPlaceNm}/> */}
+        <div className='flex justify-center pb-8'>
+          <DetailMap addr={parkDetail.address} name={parkDetail.prkPlaceNm}/>
         </div>
-        <div className='flex pt-5 grow relative justify-center'>
+        <div className='flex pt-8 grow relative justify-center'>
           <table className='table-auto w-3/5 text-center font-GmarketSansMedium shadow-md border-separate rounded-[20px] overflow-hidden'>
-            <thead className='bg-gray-200 '>
+            <thead className='bg-[#6eb17d83] '>
               <tr>
                 <th className='px-6 py-3'>주차장명</th>
                 <th>주차장 주소</th>
@@ -63,9 +63,9 @@ const ParkingDetail = () => {
             </tbody>
           </table>
         </div>
-        <div className='flex pt-10 grow relative justify-center'>
+        <div className='flex pt-20 grow relative justify-center'>
           <table className='table-auto w-3/5 text-center font-GmarketSansMedium shadow-md border-separate rounded-[20px] overflow-hidden'>
-            <thead className='bg-gray-200'>
+            <thead className='bg-[#f5f399bd] '>
               <tr>
                 <th className='px-6 py-3'>운영요일</th>
                 <th>평일 오픈</th>
@@ -89,9 +89,9 @@ const ParkingDetail = () => {
             </tbody>
           </table>
         </div>
-        <div className='flex pt-10 grow relative justify-center'>
+        <div className='flex pt-20 grow relative justify-center'>
           <table className='table-auto w-3/5 text-center font-GmarketSansMedium shadow-md border-separate rounded-[20px] overflow-hidden'>
-            <thead className='bg-gray-200'>
+            <thead className='bg-[#f5f399bd]'>
               <tr>
                 <th className='px-6 py-3'>요금정보</th>
                 <th>기본시간</th>
@@ -113,9 +113,9 @@ const ParkingDetail = () => {
             </tbody>
           </table>
         </div>
-        <div className='flex pt-10 grow relative justify-center'>
-          <table className='table-auto w-3/5 text-center font-GmarketSansMedium shadow-md border-separate rounded-[20px] overflow-hidden mb-20'>
-            <thead className='bg-gray-200'>
+        <div className='flex pt-20 grow relative justify-center'>
+          <table className='table-auto w-3/5 text-center font-GmarketSansMedium shadow-md border-separate rounded-[20px] overflow-hidden mb-44'>
+            <thead className="bg-[#6eb17d83]">
               <tr>
                 <th className='px-6 py-3'>1일 주차권 요금</th>
                 <th>1일 주차권 적용 시간</th>

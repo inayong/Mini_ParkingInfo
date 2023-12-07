@@ -118,18 +118,15 @@ const Main = () => {
     // const mapName = parkData.map((item) => item.prkPlaceNm);
     // console.log("mapName", mapName)
 
-    
-
     return (
         <main className='flex flex-col bg-gray-50'>
             <section className="py-10 h-screen ">
                 <div className='flex justify-between pb-5'></div>
                 <div className='flex h-full pb-10'>
                     <div className='flex-none w-1/5'></div>
-                    {/* <div className='w-3/5 bg-white shadow-xl rounded-2xl overflow-auto' style={{backgroundImage: `url("https://i.ibb.co/v34BKSg/parkingimage2.png")`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: '120%'}}> */}
-                    <div className='w-3/5 bg-white shadow-xl rounded-2xl overflow-auto'>
+                    <div className='w-3/5 bg-white shadow-xl rounded-2xl'>
                         <div>
-                            <div className='text-center pt-5 font-bold font-EFwatermelonSalad text-3xl'>주차장 검색하기</div>
+                            <h3 className='text-center pt-5 font-bold font-EFwatermelonSalad text-lg'>주차장 검색하기</h3>
                         </div>
                         <div className='relative flex justify-center pt-5 pb-2 sm:text-xs'>
                             <div className='pr-1'>
@@ -176,14 +173,8 @@ const Main = () => {
                         </div>
                         <div className="flex pt-10">
                             <div className="flex-none w-1/6 "></div>
-                            <div className="grow relative overflow-x-auto">
-                                {!gu && !dong && !prkPlaceNm && (
-                                    <p className='text-center font-omyupretty text-lg pt-5'>
-                                        '구' 또는 '동'을 선택해주시거나 주차장명을 검색해주세요.
-                                    </p>
-                                )}
-                                {gu || dong || prkPlaceNm ? (
-                                    searData && Array.isArray(search) && search.length > 0 ? (
+                            <div className="grow relative overflow-x-auto shadow-md">
+                                    { searData && Array.isArray(search) && search.length > 0 ? (
                                         <table className='table-auto w-full text-center font-SUITERegular border border-gray-300'>
                                             <thead className='bg-slate-300'>
                                                 <tr>
@@ -194,12 +185,10 @@ const Main = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {searData.content.map((item) => (
+                                                {search.map((item) => (
                                                     <tr key={item.id} className='border-b'>
                                                         <td className='px-6 py-4 '>{item.id}</td>
-                                                        <td className='px-6 py-4 hover:underline'>
-                                                            <Link to={`parking/detail/${item.prkPlaceNm}`}>{item.prkPlaceNm}</Link>
-                                                        </td>
+                                                        <td className='px-6 py-4 hover:underline'><Link to={`parking/detail/${item.prkPlaceNm}`}>{item.prkPlaceNm}</Link></td>
                                                         <td className='px-6 py-4'>{item.address}</td>
                                                         <td className='px-6 py-4'>{item.phoneNumber}</td>
                                                     </tr>
@@ -207,11 +196,8 @@ const Main = () => {
                                             </tbody>
                                         </table>
                                     ) : (
-                                        <p className='text-center font-omyupretty text-lg pt-5'>
-                                            검색 결과가 없습니다.
-                                        </p>
-                                    )
-                                ) : null}
+                                        <p className='text-center font-omyupretty text-lg pt-5'>'구' 또는 '동'을 선택해주시거나 주차장명을 검색해주세요.</p>
+                                    )}
                                 <div className='pt-3 pb-3'>
                                     {searData && Array.isArray(searData.content) && searData.content.length > 0 && (
                                         <Pagination activePage={page} itemsCountPerPage={psize} totalItemsCount={totalpage} pageRangeDisplayed={5} onChange={handlePageChange} />
@@ -224,13 +210,16 @@ const Main = () => {
                     <div className='flex-none w-1/5'></div>
                 </div>
             </section>
-            <section className="py-5 h-screen mb-52">
+            <section className="py-5 h-screen mb-20">
                 <div>
                     <div className='flex justify-center pt-20 text-3xl font-EFwatermelonSalad font-bold'>
                         주차장 위치보기
                     </div>
                     <div className='flex justify-center pt-10'>
-                        <KakaoMap />
+                        {/* <KakaoMap /> */}
+                    </div>
+                    <div>
+
                     </div>
                 </div>
             </section>

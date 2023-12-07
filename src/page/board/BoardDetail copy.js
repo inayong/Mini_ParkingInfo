@@ -1,8 +1,5 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import CommentForm from './comment/CommentForm';
-import CommentList from './comment/CommentList';
 
 const BoardDetail = () => {
 
@@ -57,28 +54,15 @@ const BoardDetail = () => {
         console.log('Invalid date');
     }
 
-    //댓글 불러오기
-    const [comments, setComments] = useState([]);
+    //댓글 목록
+    const [commList, setCommList] = useState([]);
 
-    // useEffect(() => {
-    //     fetchComments();
-    // }, []);
-
-    // const fetchComments = async () => {
-    //     try {
-    //         const resp = await fetch(`http://10.125.121.217:8080/comment/boardComment/${boardId}`);
-    //         const data = await resp.json();
-    //         setComments(data);
-    //     } catch (err) {
-    //         console.log("댓글 불러오기 실패:", err);
-    //     }
-    // }
     const commentFetch = () => {
         const url = `http://10.125.121.217:8080/comment/boardComment/${boardId}`;
         // console.log(url)
         fetch(url)
         .then(resp => resp.json())
-        .then(data => setComments(data))
+        .then(data => setCommList(data))
         .catch(err => console.log("err", err))
     }
     useEffect(() => {
@@ -87,35 +71,73 @@ const BoardDetail = () => {
 
     }, [])
 
-    const addComment = async (text) => {
+    console.log("comm", commList)
+    // useEffect(() => {
+    //     // const comm = commentData.map((item) => item.content)
+    //     // console.log("con", comm)
 
-        try {
-            const resp = await axios.post(`http://10.125.121.217:8080/comment/create/${boardId}`, {
-                // method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': localStorage.getItem("token")
-                },
-                body: JSON.stringify({ 
-                    "text": text, 
-                    "username": localStorage.getItem("username") 
-                }),
-            });
-            // console.log(resp)
-            // const data = await resp.json();
-            setComments([...comments, resp.data]);
-            // commentFetch();
-        } catch (err) {
-            console.log("댓글 등록 실패:", err)
-        }
+    // }, [commList])
+
+    // method: 'POST',
+    // // headers: {
+    // //     'Content-Type': 'application/json',
+    // // },
+    // headers: { "Content-Type": "multipart/form-data", }, 
+    // body: JSON.stringify({ content: comment }),
+
+    //댓글 입력
+    const [newComm, setNewComm] = useState('');
+    const newCommentFetch = () => {
+
+        fetch(`http://10.125.121.217:8080/comment/create/${boardId}`, {
+            method: 'POST',
+            headers: {
+                Authorization: localStorage.getItem("token")
+            }
+        })
+            .then(resp => resp.json())
+            .then((data) => {
+                setCommList([...commList, data]);
+                // alert('댓글 작성 완료');
+                setNewComm('');
+
+            })
+            .catch(err => console.log(err))
+    }
+    useEffect(() => {
+        newCommentFetch();
+    }, [boardId])
+
+
+    // const handleSubmit = (e) => {
+    //     // e.preventDefault();
+    //     // // newCommentFetch(newComm);
+    //     // console.log("입력값: ", newComm);
+    // }
+
+    const handleInputChange = (e) => {
+        // console.log(e.target.value)
+        setNewComm(e.target.value);
     }
 
-    // useEffect(() => {
-    //     console.log(comments)
-    // }, [comments])
+    const handleSubmitComm = (e) => {
+        e.preventDefault();
+        // const subComment = {
+        //     ...commList,
+        //     username: username,
+        //     content: content,
+        //     date: currentTime(),
+        // };
+        // const commentArray = [...newComm, subComment];
+        // setNewComm(commentArray);
+        // setCommList([...commList, {
+        //     username: 'username',
+        //     content: comment,
+        // }]);
+        // setNewComm('');
+    };
 
-    
-    // console.log(boardDetail)
+    console.log(boardDetail)
     return (
         <main className='flex h-screen'>
             <div className="container mx-auto p-4 h-screen">
@@ -141,8 +163,7 @@ const BoardDetail = () => {
                                 </div>
                             </div>
                             <div className='pt-20 pb-10'>
-                                {/* <CommentList onSubmit={comments} /> */}
-                                {comments && Array.isArray(comments) && comments.map((item) => (
+                                {commList && Array.isArray(commList) && commList.map((item) => (
                                     <div key={item.id} className='bg-slate-300'>
                                         <div className='text-lg'>댓글목록</div>
                                         <div>
@@ -152,7 +173,13 @@ const BoardDetail = () => {
                                         </div>
                                     </div>
                                 ))}
-                                <CommentForm onSubmit={addComment} />
+                                <div>
+                                    {/* <form onSubmit={handleSubmit}> */}
+                                    <form>
+                                        <input type='text' value={newComm} onChange={handleInputChange} placeholder='댓글을 입력해주세요.' />
+                                        <button type='submit' onClick={handleSubmitComm}>확인</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                         <div className='flex pt-8 justify-center'>
