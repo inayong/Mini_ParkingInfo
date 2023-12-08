@@ -10,7 +10,7 @@ const Board = () => {
             .then(resp => resp.json())
             .then(data => {
                 setBoardData(data)
-                console.log("board",data)
+                // console.log("board",data)
             })
             .catch(err => console.log(err))
     }
@@ -22,6 +22,24 @@ const Board = () => {
     // const boardlist = boardData.map((item) => item.id)
     // console.log(boardlist)
     
+    // const newBoard = (content) => {
+    //     fetch("http://10.125.121.217:8080/board/create", {
+    //         method: "post",
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': localStorage.getItem("token")
+    //         },
+    //         body: JSON.stringify({ 
+    //             "contet": content, 
+    //             "username": localStorage.getItem("username") 
+    //         }),
+    //     })
+    //         .then((resp) => resp.json())
+    //         .then((data) => {
+    //             setBoardData([...boardData, data])
+    //         })
+    //         .catch((err) => console.log("게시글 등록 실패:", err))
+    // }
 
 
     return (

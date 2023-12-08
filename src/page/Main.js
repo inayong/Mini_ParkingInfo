@@ -230,7 +230,7 @@ const Main = () => {
                         주차장 위치보기
                     </div>
                     <div className='flex justify-center pt-10'>
-                        <KakaoMap />
+                        {/* <KakaoMap /> */}
                     </div>
                 </div>
             </section>

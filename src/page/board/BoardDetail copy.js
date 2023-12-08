@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import CommentForm from './comment/CommentForm';
 
 const BoardDetail = () => {
 
@@ -26,11 +27,6 @@ const BoardDetail = () => {
 
     //오브젝트 값 가져오기
     useEffect(() => {
-        // console.log("useEffect", boardDetail)
-        // Object.entries(boardDetail).map((k, idx) => console.log(k,k[0], k[1]))
-
-        // console.log('title', boardDetail['title'])
-        // console.log('content', boardDetail['content'])
 
     }, [boardDetail])
 
@@ -54,16 +50,16 @@ const BoardDetail = () => {
         console.log('Invalid date');
     }
 
-    //댓글 목록
-    const [commList, setCommList] = useState([]);
+    //댓글 불러오기
+    const [comments, setComments] = useState([]);
 
     const commentFetch = () => {
         const url = `http://10.125.121.217:8080/comment/boardComment/${boardId}`;
         // console.log(url)
         fetch(url)
-        .then(resp => resp.json())
-        .then(data => setCommList(data))
-        .catch(err => console.log("err", err))
+            .then(resp => resp.json())
+            .then(data => setComments(data))
+            .catch(err => console.log("err", err))
     }
     useEffect(() => {
         // fetchBoardDetail();
@@ -71,86 +67,60 @@ const BoardDetail = () => {
 
     }, [])
 
-    console.log("comm", commList)
-    // useEffect(() => {
-    //     // const comm = commentData.map((item) => item.content)
-    //     // console.log("con", comm)
-
-    // }, [commList])
-
-    // method: 'POST',
-    // // headers: {
-    // //     'Content-Type': 'application/json',
-    // // },
-    // headers: { "Content-Type": "multipart/form-data", }, 
-    // body: JSON.stringify({ content: comment }),
-
+    
     //댓글 입력
-    const [newComm, setNewComm] = useState('');
-    const newCommentFetch = () => {
-
+    const addComment = (content) => {
         fetch(`http://10.125.121.217:8080/comment/create/${boardId}`, {
-            method: 'POST',
+            method: "post",
             headers: {
-                Authorization: localStorage.getItem("token")
-            }
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem("token")
+            },
+            body: JSON.stringify({
+                "content": content
+                // "username": localStorage.getItem("username")
+            }),
         })
-            .then(resp => resp.json())
             .then((data) => {
-                setCommList([...commList, data]);
-                // alert('댓글 작성 완료');
-                setNewComm('');
-
+                setComments([...comments, data])
+                // commentFetch();
             })
-            .catch(err => console.log(err))
-    }
-    useEffect(() => {
-        newCommentFetch();
-    }, [boardId])
-
-
-    // const handleSubmit = (e) => {
-    //     // e.preventDefault();
-    //     // // newCommentFetch(newComm);
-    //     // console.log("입력값: ", newComm);
-    // }
-
-    const handleInputChange = (e) => {
-        // console.log(e.target.value)
-        setNewComm(e.target.value);
+            .catch((err) => console.log("댓글 등록 실패:", err))
     }
 
-    const handleSubmitComm = (e) => {
-        e.preventDefault();
-        // const subComment = {
-        //     ...commList,
-        //     username: username,
-        //     content: content,
-        //     date: currentTime(),
-        // };
-        // const commentArray = [...newComm, subComment];
-        // setNewComm(commentArray);
-        // setCommList([...commList, {
-        //     username: 'username',
-        //     content: comment,
-        // }]);
-        // setNewComm('');
+
+    // console.log(boardDetail)
+
+    //수정 & 삭제 버튼
+    const isLoggedIn = () => {
+        const loggedInUser = localStorage.getItem('username'); 
+        return loggedInUser === boardDetail['username'];
     };
 
-    console.log(boardDetail)
+
+
     return (
         <main className='flex h-screen'>
             <div className="container mx-auto p-4 h-screen">
                 <h1 className="text-3xl font-bold mb-4">게시글 상세</h1>
-                {/* {detailBoard.map((item) => ( */}
                 <div className='h-full pb-40 font-SUITERegular'>
                     <div className='h-full' >
                         <div className='border-4 border-gray-100 shadow-md rounded-lg m-10 px-3'>
-                            <div className='flex pt-2 pb-1'>
+                            <div className='flex justify-between pt-2 pb-1'>
                                 <div className=' w-1/2 font-bold text-4xl '>{boardDetail['title']}</div>
+                                {isLoggedIn() && (
+                                <div className='flex items-center'>
+                                    <div className='ml-auto'>
+                                        <button className='ml-2'>수정</button>
+                                    </div>
+                                    <div className='ml-2'>
+                                        <button>삭제</button>
+                                    </div>
+                                </div>
+                                )}
                             </div>
                             <div className='pt-3 pb-6'>
-                                <div className='grid grid-cols-6 gap-1 '>
+                                <div className='grid grid-cols-6 gap-1'>
                                     <div className='col-start-1 col-end-6 font-medium'>{boardDetail['username']}</div>
                                     <div className='col-start-1 col-span-2 text-xs text-gray-400'>{datePart} | {timePart}</div>
                                     <div className='text-xs text-gray-400'>{boardDetail['view']}</div>
@@ -163,7 +133,7 @@ const BoardDetail = () => {
                                 </div>
                             </div>
                             <div className='pt-20 pb-10'>
-                                {commList && Array.isArray(commList) && commList.map((item) => (
+                                {comments && Array.isArray(comments) && comments.map((item) => (
                                     <div key={item.id} className='bg-slate-300'>
                                         <div className='text-lg'>댓글목록</div>
                                         <div>
@@ -173,25 +143,14 @@ const BoardDetail = () => {
                                         </div>
                                     </div>
                                 ))}
-                                <div>
-                                    {/* <form onSubmit={handleSubmit}> */}
-                                    <form>
-                                        <input type='text' value={newComm} onChange={handleInputChange} placeholder='댓글을 입력해주세요.' />
-                                        <button type='submit' onClick={handleSubmitComm}>확인</button>
-                                    </form>
-                                </div>
+                                <CommentForm onSubmit={addComment} />
                             </div>
                         </div>
                         <div className='flex pt-8 justify-center'>
                             <button type='button' className='text-2xl bg-slate-300 p-2 rounded-lg '><Link to="/board">글 목록</Link></button>
                         </div>
                     </div>
-                    {/* <div className='pt-8'>
-                        <button type='button' className='border border-slate-400'><Link to="/board">글 목록</Link></button>
-                    </div> */}
-
                 </div>
-                {/* ))} */}
             </div>
         </main>
     )
