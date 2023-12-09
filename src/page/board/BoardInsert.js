@@ -7,7 +7,7 @@ const BoardInsert = () => {
     const [content, setContent] = useState('');
     const [boardData, setBoardData] = useState([]);
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const getData = () => {
 
@@ -35,10 +35,10 @@ const BoardInsert = () => {
             body: JSON.stringify({ 
                 "title": title,
                 "content": content, 
-                "username": localStorage.getItem("username") 
+                // "username": localStorage.getItem("username") 
             }),
         })
-            .then((resp) => resp.json())
+            // .then((resp) => resp.json())  //type error
             .then((data) => {
                 setBoardData([...boardData, data])
                 // const newPostId = data.id;
@@ -47,15 +47,18 @@ const BoardInsert = () => {
                 // navigate(`/board/detail/${newPostId}`)
                 // navigate("/board")
             })
-            .catch((err) => console.log("게시글 등록 실패:", err))
+            .catch((err) => console.error("게시글 등록 실패:", err))
     }
+    // useEffect(() => {
+    //     newBoard
+    // }, [])
 
     const handleBoardSubmit = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         newBoard();
         setTitle('');
         setContent('');
-        // navigate("/board")
+        navigate("/board")
     }
 
     return (

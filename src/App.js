@@ -16,9 +16,14 @@ import ParkingDetail from './page/parking/ParkingDetail';
 import ParkingFee from './page/parking/ParkingFee';
 import InfoMain from './realtimeinfo/InfoMain';
 import { RecoilRoot } from 'recoil';
+import BoardUpdate from './page/board/BoardUpdate';
+import PrivateRoute from './comm/PrivateRoute';
 
 function App() {
-  // <div className="h-auto min-h-full pb-2">
+  
+  // const currentUsername = localStorage.getItem('username');
+  // const allowedUsername = 'allowed_username_here';
+
   return (
     <div className="flex flex-col h-screen">
       <RecoilRoot>
@@ -27,11 +32,20 @@ function App() {
 
           <Routes>
             <Route path='/' element={<Main />}></Route>
+            {/* <Switch> */}
             <Route path='/login' element={<Login />}></Route>
+            {/* <PrivateRoute
+          path="/board/update/:boardId"
+          component={BoardUpdate}
+          allowedUsername={allowedUsername}
+          currentUsername={currentUsername}
+        /> */}
+            {/* </Switch> */}
             <Route path='/signup' element={<SignUp />}></Route>
             <Route path='/board' element={<Board />}></Route>
             <Route path='/board/insert' element={<BoardInsert />}></Route>
             <Route path='/board/detail/:boardId' element={<BoardDetail />}></Route>
+            <Route path='/board/update/:boardId' element={<BoardUpdate />}></Route>
             <Route path='/parking' element={<Parking />}></Route>
             <Route path='/parking/detail/:parkingName' element={<ParkingDetail />}></Route>
             <Route path='/parkingfee' element={<ParkingFee />}></Route>
