@@ -105,19 +105,37 @@ const Main = () => {
 
     //페이지
     // const [page, setPage] = useState(0); //현재페이지
-    const psize = searData.size //보여줄 개수
-    const totalpage = searData.totalElements //전체 개수
-    console.log("size, total", psize, totalpage)
-
-
+    // const repage = page + 1;
+    const psize = searData.size; //보여줄 개수
+    const totalpage = searData.totalElements; //전체 개수
+    // console.log("size, total, page", psize, totalpage)
+    // const start = (page - 1) * psize;
+    // const end = start + psize;
+    // const displayData = searData.slice(start, end);
+    // console.log(displayData)
+    const dataArray = Array.isArray(searData) ? searData : [searData];
+const start = (page - 1) * psize;
+const end = start + psize;
+const displayData = dataArray.slice(start, end);
+console.log(displayData);
+console.log("con",searData.content)
+console.log("map", displayData)
+    
+    // const repage = page > 0 ? page - 1 : 0;
     const handlePageChange = (page) => {
         setPage(page);
         // console.log("page",page);
     }
 
+    //페이징
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const itemsPerPage = 10;
+//   // const pageRange = 5;
+//   const startIndex = (currentPage - 1) * itemsPerPage; //시작 인덱스 현재페이지=1 => 0, p=2 => 10
+//   const endIndex = startIndex + itemsPerPage; //
+
     // const mapName = parkData.map((item) => item.prkPlaceNm);
     // console.log("mapName", mapName)
-
 
     //콘텐츠 내용에 따라 div크기 늘리기(안됨)
     // const containerRef = useRef();
@@ -206,7 +224,7 @@ const Main = () => {
                                 {gu || dong || prkPlaceNm ? (
                                     searData && Array.isArray(search) && search.length > 0 ? (
                                         <table className='table-auto w-full text-center font-SUITERegular border border-gray-300'>
-                                            <thead className='bg-gray-300'>
+                                            <thead className='bg-slate-300'>
                                                 <tr>
                                                     <th className='px-6 py-5'>No.</th>
                                                     <th className='px-6 py-5'>주차장명</th>

@@ -2,13 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import CommentForm from './CommentForm';
 
-const Comment = () => {
+const Comment = ({ datePart, timePart }) => {
   const { boardId } = useParams();
 
   const navigate = useNavigate();
 
   const [comments, setComments] = useState('');
   const [editComment, setEditComment] = useState(null);
+
+  // const [hour, minute] = timePart.split(':');
+  const [hour, minute] = timePart ? timePart.split(':') : ['', ''];
+
 
   //댓글 목록
   const listComment = () => {
@@ -80,15 +84,16 @@ const Comment = () => {
 
 
   return (
-    <div>
-      <div>댓글 목록</div>
+    <div className='font-NanumSquareNeoVariable'>
+      <div className='pb-2 font-GmarketSansMedium text-lg'>댓글</div>
       <div>
         {comments && Array.isArray(comments) && comments.map((item) => (
-          <div className='bg-slate-200'>
-            <div key={item.id}>
-              <div className='flex'>작성자: {item.username}
+          <div>
+            <div key={item.id} className=' pt-5 px-5'>
+              <div className='flex'>
+                <div className='font-black p-2'>{item.username}</div>
                 {loginUser === item.username && (
-                  <div className='flex'>
+                  <div className='flex text-sm items-center'>
                     <div className='ml-auto'>
                       <button className='ml-10'>수정</button>
                     </div>
@@ -98,12 +103,17 @@ const Comment = () => {
                   </div>
                 )}
               </div>
-              <div>내용: {item.content}</div>
-              <div>작성일: {item.createDate}</div>
+              <div className='pl-3 pt-1'>{item.content}</div>
+              {/* <div>{item.createDate}</div> */}
+              <div className="whitespace-pre pt-2 text-xs text-gray-500 border-b">{datePart}{'     '}{hour}:{minute}</div>
+              {/* <div>
+                {datePart && `${datePart} `}
+                {hour && minute && <>&nbsp;&nbsp;{hour}:{minute}</>}
+              </div> */}
             </div>
           </div>
         ))}
-        <div>
+        <div className='pt-20 pl-5'>
           <CommentForm onSubmit={addComment} />
         </div>
       </div>

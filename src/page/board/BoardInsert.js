@@ -15,7 +15,7 @@ const BoardInsert = () => {
             .then(resp => resp.json())
             .then(data => {
                 setBoardData(data)
-                console.log("board",data)
+                // console.log("board",data)
             })
             .catch(err => console.log(err))
     }
@@ -41,11 +41,7 @@ const BoardInsert = () => {
             // .then((resp) => resp.json())  //type error
             .then((data) => {
                 setBoardData([...boardData, data])
-                // const newPostId = data.id;
-                // console.log("newid", newPostId)
-                // console.log("boardData, data", [...boardData, data])
-                // navigate(`/board/detail/${newPostId}`)
-                // navigate("/board")
+                window.location.reload();
             })
             .catch((err) => console.error("게시글 등록 실패:", err))
     }

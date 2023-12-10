@@ -117,6 +117,8 @@ const BoardUpdate = () => {
                 <div className='h-full pb-40 font-SUITERegular'>
                     <div className='h-full pt-16' >
                         <div className='border-4 border-gray-100 shadow-md rounded-lg m-10 px-3'>
+                            <div className='bg-white shadow-md rounded-lg m-1 p-1'>
+                                <div className='m-3'>
                                     <div className='flex justify-between pt-2 pb-1'>
                                         <div className=' w-1/2 font-bold text-4xl '>
                                             <input
@@ -149,6 +151,8 @@ const BoardUpdate = () => {
                                     <div className='flex justify-center'>
                                         <button onClick={fetchBoardUpdate} className='bg-slate-300 m-3 p-2 rounded-xl'>수정하기</button>
                                     </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

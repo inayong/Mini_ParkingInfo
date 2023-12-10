@@ -118,36 +118,15 @@ const Main = () => {
     // const mapName = parkData.map((item) => item.prkPlaceNm);
     // console.log("mapName", mapName)
 
-
-    //콘텐츠 내용에 따라 div크기 늘리기(안됨)
-    // const containerRef = useRef();
-    // const [containerHeight, setContainerHeight] = useState();
-
-    // useEffect(() => {
-    //     const resizeObserver = new ResizeObserver(entries => {
-    //         for (let entry of entries) {
-    //             setContainerHeight(entry.contentRect.height)
-    //         }
-    //     });
-
-    //     if (containerRef.current) {
-    //         resizeObserver.observe(containerRef.current);
-    //     }
-
-    //     return () => {
-    //         resizeObserver.disconnect();
-    //     }
-    // }, []);
-
+    
 
     return (
         <main className='flex flex-col bg-gray-50'>
-            <div className="py-10 h-screen">
-                {/* <div className='flex justify-between pb-5 h-80' style={{backgroundImage: `url("https://i.ibb.co/345HV53/parking-Banner.png")`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: '60%'}}></div> 배너 */}
+            <section className="py-10 h-screen ">
+                <div className='flex justify-between pb-5'></div>
                 <div className='flex h-full pb-10'>
                     <div className='flex-none w-1/5'></div>
                     {/* <div className='w-3/5 bg-white shadow-xl rounded-2xl overflow-auto' style={{backgroundImage: `url("https://i.ibb.co/v34BKSg/parkingimage2.png")`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: '120%'}}> */}
-                    {/* <div ref={containerRef} className='w-3/5 bg-white shadow-xl rounded-2xl' style={{ height: containerHeight }}> */}
                     <div className='w-3/5 bg-white shadow-xl rounded-2xl overflow-auto'>
                         <div>
                             <div className='text-center pt-5 font-bold font-EFwatermelonSalad text-3xl'>주차장 검색하기</div>
@@ -197,7 +176,7 @@ const Main = () => {
                         </div>
                         <div className="flex pt-10">
                             <div className="flex-none w-1/6 "></div>
-                            <div className="grow relative overflow-x-auto mb-20">
+                            <div className="grow relative overflow-x-auto">
                                 {!gu && !dong && !prkPlaceNm && (
                                     <p className='text-center font-omyupretty text-lg pt-5'>
                                         '구' 또는 '동'을 선택해주시거나 주차장명을 검색해주세요.
@@ -206,7 +185,7 @@ const Main = () => {
                                 {gu || dong || prkPlaceNm ? (
                                     searData && Array.isArray(search) && search.length > 0 ? (
                                         <table className='table-auto w-full text-center font-SUITERegular border border-gray-300'>
-                                            <thead className='bg-gray-300'>
+                                            <thead className='bg-slate-300'>
                                                 <tr>
                                                     <th className='px-6 py-5'>No.</th>
                                                     <th className='px-6 py-5'>주차장명</th>
@@ -228,11 +207,9 @@ const Main = () => {
                                             </tbody>
                                         </table>
                                     ) : (
-                                        gu && dong && prkPlaceNm ? (
-                                            <p className='text-center font-omyupretty text-lg pt-5'>
-                                                검색 결과가 없습니다.
-                                            </p>
-                                        ) : null
+                                        <p className='text-center font-omyupretty text-lg pt-5'>
+                                            검색 결과가 없습니다.
+                                        </p>
                                     )
                                 ) : null}
                                 <div className='pt-3 pb-3'>
@@ -246,8 +223,8 @@ const Main = () => {
                     </div>
                     <div className='flex-none w-1/5'></div>
                 </div>
-            </div>
-            <div className="py-5 h-screen mb-52">
+            </section>
+            <section className="py-5 h-screen mb-52">
                 <div>
                     <div className='flex justify-center pt-20 text-3xl font-EFwatermelonSalad font-bold'>
                         주차장 위치보기
@@ -256,7 +233,7 @@ const Main = () => {
                         {/* <KakaoMap /> */}
                     </div>
                 </div>
-            </div>
+            </section>
         </main>
     )
 }

@@ -39,7 +39,7 @@ const ParkingDetail = () => {
           <div className='border-b-2 border-black pt-3'></div>
         </div>
         <div className='flex justify-center pb-8'>
-          {/* <DetailMap addr={parkDetail.address} name={parkDetail.prkPlaceNm}/> */}
+          <DetailMap addr={parkDetail.address} name={parkDetail.prkPlaceNm}/>
         </div>
         <div className='flex pt-8 grow relative justify-center'>
           <table className='table-auto w-3/5 text-center font-GmarketSansMedium shadow-md border-separate rounded-[20px] overflow-hidden'>

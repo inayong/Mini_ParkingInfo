@@ -12,7 +12,8 @@ const Parking = () => {
   // const pageRange = 5;
   const startIndex = (currentPage - 1) * itemsPerPage; //시작 인덱스 현재페이지=1 => 0, p=2 => 10
   const endIndex = startIndex + itemsPerPage; //
-  const displayData = parkData.slice(startIndex, endIndex); //현재페이지에서 보여줄
+  const displayData = parkData.slice(startIndex, endIndex); //현재페이지에서 보여줄 데이터(배열)
+  console.log(currentPage, startIndex, endIndex)
 
   useEffect(() => {
     const getData = () => {
@@ -46,7 +47,7 @@ const Parking = () => {
           
           <div className='flex justify-center rounded-2xl'>
             <table className='w-3/5 text-center bg-white font-GmarketSansMedium'>
-              <thead className='border-b border-black bg-blue-100 '>
+              <thead className='border-b border-black bg-gradient-to-tr from-blue-900 to-sky-900 text-white '>
                 <tr className=''>
                   <th className='px-6 py-5'>No.</th>
                   <th className='px-6 py-5'>주차장명</th>
