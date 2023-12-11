@@ -47,8 +47,8 @@ const Comment = ({ datePart, timePart }) => {
       .catch((err) => console.error("댓글 등록 실패:", err))
   }
 
-  // const idss = comments && comments.map((item) => item.id)
-  // console.log("id", idss)
+  const idss = comments && comments.map((item) => item.id)
+  console.log("id", idss)
   // console.log("name", comments['username']);
 
   //수정 & 삭제 버튼
@@ -79,15 +79,13 @@ const Comment = ({ datePart, timePart }) => {
       .catch((err) => console.error("댓글 삭제 오류:", err))
   }
 
-  // console.log("댓글", comments)
+  console.log("댓글", comments)
   // console.log("id", com)
 
   //댓글 수정
 
   const [editComment, setEditComment] = useState({});
   const [selectedCommentId, setSelectedCommentId] = useState('');
-  const [showDeleteButton, setShowDeleteButton] = useState(true);
-  const [showModal, setShowModal] = useState(false);
 
   const startEditing = (id, content) => {
     setEditComment({
@@ -95,15 +93,11 @@ const Comment = ({ datePart, timePart }) => {
       [id]: content
     })
     setSelectedCommentId(id);
-    setShowDeleteButton(false);
-    setShowModal(true);
   }
 
   const cancelEditing = () => {
     setEditComment({});
     setSelectedCommentId('');
-    setShowDeleteButton(true);
-    setShowModal(false);
   }
 
 
@@ -166,9 +160,7 @@ const Comment = ({ datePart, timePart }) => {
                       )}
                     </div>
                     <div className='ml-2'>
-                      {showDeleteButton && (
                       <button key={item.id} onClick={() => deleteComment(item.id)}>삭제</button>
-                      )}
                     </div>
                   </div>
                 )}

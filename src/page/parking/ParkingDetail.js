@@ -43,7 +43,8 @@ const ParkingDetail = () => {
         </div>
         <div className='flex pt-8 grow relative justify-center'>
           <table className='table-auto w-3/5 text-center font-GmarketSansMedium shadow-md border-separate rounded-[20px] overflow-hidden'>
-            <thead className='bg-[#6eb17d83] '>
+            {/* <thead className='bg-[#6eb17d83] '> */}
+            <thead className='bg-[#49815683] '>
               <tr>
                 <th className='px-6 py-3'>주차장명</th>
                 <th>주차장 주소</th>
@@ -65,7 +66,8 @@ const ParkingDetail = () => {
         </div>
         <div className='flex pt-20 grow relative justify-center'>
           <table className='table-auto w-3/5 text-center font-GmarketSansMedium shadow-md border-separate rounded-[20px] overflow-hidden'>
-            <thead className='bg-[#f5f399bd] '>
+            {/* <thead className='bg-[#f5f399bd] '> */}
+            <thead className='bg-[#f0ee8dda] '>
               <tr>
                 <th className='px-6 py-3'>운영요일</th>
                 <th>평일 오픈</th>
@@ -91,7 +93,7 @@ const ParkingDetail = () => {
         </div>
         <div className='flex pt-20 grow relative justify-center'>
           <table className='table-auto w-3/5 text-center font-GmarketSansMedium shadow-md border-separate rounded-[20px] overflow-hidden'>
-            <thead className='bg-[#f5f399bd]'>
+            <thead className='bg-[#f0ee8dda]'>
               <tr>
                 <th className='px-6 py-3'>요금정보</th>
                 <th>기본시간</th>
@@ -115,7 +117,7 @@ const ParkingDetail = () => {
         </div>
         <div className='flex pt-20 grow relative justify-center'>
           <table className='table-auto w-3/5 text-center font-GmarketSansMedium shadow-md border-separate rounded-[20px] overflow-hidden mb-44'>
-            <thead className="bg-[#6eb17d83]">
+            <thead className="bg-[#49815683]">
               <tr>
                 <th className='px-6 py-3'>1일 주차권 요금</th>
                 <th>1일 주차권 적용 시간</th>

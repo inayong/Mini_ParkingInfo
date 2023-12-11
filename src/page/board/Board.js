@@ -13,7 +13,7 @@ const Board = () => {
             .then(resp => resp.json())
             .then(data => {
                 setBoardData(data)
-                // console.log("board",data)
+                console.log("board",data)
             })
             .catch(err => console.log(err))
     }
@@ -63,7 +63,7 @@ const Board = () => {
                                     </tr>
                                 </thead>
                                 <tbody className='text-center'>
-                                    {boardData.map((item) => (
+                                    {boardData && boardData.map((item) => (
                                         <tr key={item.id} className="bg-white">
                                             <td className="border border-gray-300 w-10 h-12 text-xs">{item.id}</td>
                                             <td className="border border-gray-300"><Link to={`detail/${item.id}`}>{item.title}</Link></td>

@@ -31,7 +31,7 @@ const SignUp = () => {
                 console.log(resp);
                 alert("회원가입 완료");
                 if ((resp.status === 200)) {
-                    navigate("/");
+                    navigate("/login");
                 }
             })
             .catch((err) => {

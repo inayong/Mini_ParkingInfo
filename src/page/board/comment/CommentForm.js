@@ -22,6 +22,7 @@ const CommentForm = ({ onSubmit }) => {
     }
     onSubmit(content);
     setContent('');
+    window.location.reload();
   };
 
   return (

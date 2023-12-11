@@ -187,7 +187,8 @@ const Main = () => {
                                     {/* <input type="text" ref={parkingNm} onChange={handleSearch} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-ftablel ps-10 p-2.5 " placeholder="주차장명 검색" /> */}
                                 </div>
                                 {/* <button type='submit' className="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 "> */}
-                                <button onClick={handleSearch} className="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                                {/* <button onClick={handleSearch} className="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 "> */}
+                                <button onClick={handleSearch} className="p-2.5 ms-2 text-sm font-medium text-white bg-gray-400 rounded-lg border border-gray-400 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 ">
                                     <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                     </svg>
@@ -206,7 +207,8 @@ const Main = () => {
                                 {gu || dong || prkPlaceNm ? (
                                     searData && Array.isArray(search) && search.length > 0 ? (
                                         <table className='table-auto w-full text-center font-SUITERegular border border-gray-300'>
-                                            <thead className='bg-gray-300'>
+                                            <thead className='bg-gradient-to-tr from-sky-800 to-blue-800 text-white'>
+                                            {/* <thead className='bg-gray-300'> */}
                                                 <tr>
                                                     <th className='px-6 py-5'>No.</th>
                                                     <th className='px-6 py-5'>주차장명</th>
@@ -253,7 +255,7 @@ const Main = () => {
                         주차장 위치보기
                     </div>
                     <div className='flex justify-center pt-10'>
-                        {/* <KakaoMap /> */}
+                        <KakaoMap />
                     </div>
                 </div>
             </div>

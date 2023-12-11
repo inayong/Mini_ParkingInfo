@@ -118,7 +118,7 @@ const BoardDetail = () => {
     return (
         <main className='flex h-screen'>
             <div className="container mx-auto p-4 h-screen">
-                {/* <div className="text-3xl font-bold mb-4">게시글 상세</div> */}
+                <div className="text-3xl font-bold mb-4">게시글 상세</div>
                 <div className='h-full pb-40 font-SUITERegular'>
                     <div className='h-full pt-16' >
                         <div className='bg-gradient-to-tr from-blue-800 to-sky-800 p-1 rounded-lg'>
@@ -140,7 +140,7 @@ const BoardDetail = () => {
                                     <div className='pt-3 pb-6'>
                                         <div className='grid grid-cols-6 gap-1'>
                                             <div className='col-start-1 col-end-6 font-medium'>{boardDetail['username']}</div>
-                                            <div className='col-start-1 col-span-2 text-xs text-gray-400'>{datePart} | {timePart}</div>
+                                            <div className='col-start-1 col-span-2 text-xs text-gray-400 whitespace-pre'>{datePart}{'     '}{timePart}</div>
                                             <div className='text-xs text-gray-400'>{boardDetail['view']}</div>
                                             <div className='col-end-7 text-xs'>댓글수는 미정</div>
                                         </div>

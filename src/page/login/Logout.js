@@ -21,9 +21,9 @@ const Logout = ({userName}) => {
         navigate("/");
     }
   return (
-    <div className='flex'>
-        <div className='flex-col pr-2'>{userName} 님</div>
-        <button onClick={handleLogout}>Logout</button>
+    <div className='flex items-center'>
+        <div className='flex-col pr-2 font-NanumSquareNeoVariable '>{userName} 님</div>
+        <button onClick={handleLogout} className='border-2 rounded-lg inline-flex py-1 px-2 font-HakgyoansimWoojuR font-semibold'>로그아웃</button>
     </div>
   )
 }
