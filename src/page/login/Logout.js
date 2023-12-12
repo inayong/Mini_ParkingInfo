@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { LogAtom } from './LogAtom';
 
@@ -22,7 +22,7 @@ const Logout = ({userName}) => {
     }
   return (
     <div className='flex items-center'>
-        <div className='flex-col pr-2 font-NanumSquareNeoVariable '>{userName} 님</div>
+        <div className='flex-col pr-2 font-NanumSquareNeoVariable '><Link to="/mypage" className='hover:underline'>{userName} 님</Link></div>
         <button onClick={handleLogout} className='border-2 rounded-lg inline-flex py-1 px-2 font-HakgyoansimWoojuR font-semibold'>로그아웃</button>
     </div>
   )

@@ -6,41 +6,20 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { TbParking } from "react-icons/tb";
 
 const HeaderMenu = () => {
-  // const [userName, setUserName] = useState(null);
-  // const [isLoggedIn, setLoggedIn] = useState();
-  // const isLogAtom= useRecoilValue(LogAtom);
+  
   const [isLogAtom, setIsLogAtom] = useRecoilState(LogAtom);
 
-  // console.log("user", userName)
-//   const checkLoginStatus = () => {
-//     return !!localStorage.getItem('authToken');
-// };
+  
 
   useEffect(() => {
-    // setUserName(localStorage.getItem("username"))
-    // if (!userName) {
-    //   setIsLogAtom(false)
-    // } else {
-    //   setIsLogAtom(true)
-    // }
-    // setUserName(localStorage.getItem("username"))
+    
     setIsLogAtom(localStorage.getItem("username"))
-    // console.log(localStorage.getItem("username"))
-    // const storedUserName = localStorage.getItem("username")
-    // if (storedUserName) {
-    //   setLoggedIn({
-    //     isLoggedIn: true,
-    //     userName: storedUserName,
-    //   });
-    //   setUserName(storedUserName);
-    // }
-
+    
   }, [isLogAtom]);
 
   return (
     <header>
       <nav className="flex h-20 bg-gradient-to-tr from-blue-900 to-sky-900 text-white">
-      {/* <nav className="flex h-20 bg-blue-700">/  */}
         <div className="w-full grid grid-cols-5 gap-4 items-center text-center">
           <div onClick={() => {window.location.reload()}} className="flex justify-between items-center">
             <Link to="/">

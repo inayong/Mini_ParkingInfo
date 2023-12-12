@@ -71,7 +71,6 @@ const Comment = ({ datePart, timePart }) => {
           alert("삭제 성공");
           // navigate(`/board/detail/${boardId}`)
           // setComments(comments.filter((comment) => comment.id !== idss))
-          setCommentToDelete(null);
           window.location.reload();
         } else {
           alert("삭제 실패")
@@ -133,68 +132,52 @@ const Comment = ({ datePart, timePart }) => {
 
   }
 
-  const [commentToDelete, setCommentToDelete] = useState(null);
-
-  // const handleDelete = () => {
-
-  // }
-
 
   return (
     <div className='font-NanumSquareNeoVariable'>
       <div className='pb-2 font-GmarketSansMedium text-lg'>댓글</div>
       <div>
         {comments && Array.isArray(comments) && comments.map((item) => (
-          <div key={item.id} className='pt-5 px-5'>
-            <div className='flex items-start'>
+          <div>
+            <div key={item.id} className=' pt-5 px-5'>
               <div className='flex'>
-                <div className='font-black p-1'>{item.username}</div>
-                {loginUser === item.username && selectedCommentId !== item.id && (
-                  <div className='flex ml-2'>
-                    <button onClick={() => startEditing(item.id, item.content)} className='ml-2 hover:bg-gray-100 rounded-lg my-1'>수정</button>
-                    {showDeleteButton && (
-                      <button onClick={() => setCommentToDelete(item.id)} className='ml-2 hover:bg-gray-100 rounded-lg my-1'>삭제</button>
-                    )}
-                {commentToDelete && (
-                  <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
-                    <div className="bg-white p-6 rounded-md">
-                      <p>댓글을 삭제하시겠습니까?</p>
-                      <div className="flex justify-center mt-4">
-                        <button onClick={() => deleteComment(commentToDelete)} className="px-3 py-1 bg-red-500 text-white rounded-md">삭제</button>
-                        <button onClick={() => setCommentToDelete(null)} className="ml-4 px-3 py-1 bg-gray-300 rounded-md">취소</button>
-                      </div>
+                <div className='font-black p-2'>{item.username}</div>
+                {loginUser === item.username && (
+                  <div className='flex text-sm items-center'>
+                    <div className='ml-auto'>
+                      {selectedCommentId === item.id ? (
+                        <div>
+                          <textarea
+                            value={editComment[item.id]}
+                            onChange={(e) => setEditComment({
+                              ...editComment,
+                              [item.id]: e.target.value
+                            })
+                            }
+                          />
+                          <button onClick={() => updateComment(item.id)}>저장</button>
+                          <button onClick={() => cancelEditing()}>취소</button>
+                        </div>
+                      ) : (
+                        <button key={item.id} className='ml-10' onClick={() => startEditing(item.id, item.content)}>수정</button>
+                      )}
+                    </div>
+                    <div className='ml-2'>
+                      {showDeleteButton && (
+                      <button key={item.id} onClick={() => deleteComment(item.id)}>삭제</button>
+                      )}
                     </div>
                   </div>
                 )}
-                  </div>
-                )}
               </div>
+              <div className='pl-3 pt-1'>{item.content}</div>
+              {/* <div>{item.createDate}</div> */}
+              <div className="whitespace-pre pt-2 text-xs text-gray-500 border-b">{datePart}{'     '}{hour}:{minute}</div>
+              {/* <div>
+                {datePart && `${datePart} `}
+                {hour && minute && <>&nbsp;&nbsp;{hour}:{minute}</>}
+              </div> */}
             </div>
-            {selectedCommentId === item.id ? (
-              <div className='pt-3'>
-                <textarea
-                  value={editComment[item.id]}
-                  onChange={(e) =>
-                    setEditComment({
-                      ...editComment,
-                      [item.id]: e.target.value,
-                    })
-                  }
-                  className='resize-none w-1/2 border-2 outline-none'
-                />
-                <div className='flex mt-2 border-b'>
-                  <button onClick={() => updateComment(item.id)} className='hover:bg-gray-100 mr-2'>저장</button>
-                  <button onClick={() => cancelEditing()} className='hover:bg-gray-100'>취소</button>
-                </div>
-              </div>
-            ) : (
-              <div>
-                <div className='pl-3 pt-1'>{item.content}</div>
-                <div className="whitespace-pre pt-2 text-xs text-gray-500 border-b">
-                  {datePart}{'     '}{hour}:{minute}
-                </div>
-              </div>
-            )}
           </div>
         ))}
         <div className='pt-20 pl-5'>

@@ -18,6 +18,8 @@ import InfoMain from './realtimeinfo/InfoMain';
 import { RecoilRoot } from 'recoil';
 import BoardUpdate from './page/board/BoardUpdate';
 import PrivateRoute from './comm/PrivateRoute';
+import MyPage from './page/login/MyPage';
+import MyPageUpdate from './page/login/MyPageUpdate';
 
 function App() {
   
@@ -32,15 +34,9 @@ function App() {
 
           <Routes>
             <Route path='/' element={<Main />}></Route>
-            {/* <Switch> */}
             <Route path='/login' element={<Login />}></Route>
-            {/* <PrivateRoute
-          path="/board/update/:boardId"
-          component={BoardUpdate}
-          allowedUsername={allowedUsername}
-          currentUsername={currentUsername}
-        /> */}
-            {/* </Switch> */}
+            <Route path='/mypage' element={<MyPage />}></Route>
+            <Route path='/mypage/update' element={<MyPageUpdate />}></Route>
             <Route path='/signup' element={<SignUp />}></Route>
             <Route path='/board' element={<Board />}></Route>
             <Route path='/board/insert' element={<BoardInsert />}></Route>

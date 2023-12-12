@@ -17,7 +17,8 @@ const Main = () => {
     const [searData, setSearData] = useState([]);
     const [gu, setGu] = useState('');
     const [dong, setDong] = useState('');
-    const [prkPlaceNm, setPrkPlaceNm] = useState();
+    const [prkPlaceNm, setPrkPlaceNm] = useState('');
+    const [isAll, setIsAll] = useState(false);
     const parkingNm = useRef();
     const [page, setPage] = useState(0);
 
@@ -33,6 +34,10 @@ const Main = () => {
     useEffect(() => {
         selData();
     }, [])
+
+    useEffect(() => {
+        console.log("useEffect",isAll)
+    }, [isAll])
 
     //sel
     const addGu = [...new Set(parkData.map((item) => item.gu))];
@@ -50,6 +55,8 @@ const Main = () => {
         // console.log("gu", selgu)
         setSelGu(selgu);
         setGu(selRef.current.value);
+        parkingNm.current.value = '';
+        setPrkPlaceNm('');
     }
 
     const handleSel2 = () => {
@@ -60,6 +67,8 @@ const Main = () => {
         setSelDong(seldong)
         // console.log("dong", seldong)
         setDong(sel2Ref.current.value);
+        parkingNm.current.value = '';
+        setPrkPlaceNm('');
     }
 
     //search
@@ -67,13 +76,14 @@ const Main = () => {
     const searchData = () => {
 
         const url = `http://10.125.121.217:8080/parking/paging?gu=${gu}&dong=${dong}&prkPlaceNm=${prkPlaceNm}&page=${page}`;
-        // console.log("url", url)
+        console.log("url", url)
         fetch(url)
             .then(resp => resp.json())
             .then(data => {
-                setSearData(data)
+                setSearData(data) 
                 // setPSize(searData.size)
                 // setTotalPage(searData.totalElements)
+                console.log(isAll)
                 console.log(data)
             })
             .catch(err => console.log(err))
@@ -89,13 +99,17 @@ const Main = () => {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        // console.log("search", parkingNm.current.value)
-        // setGu(selRef.current.value);
-        // setDong(sel2Ref.current.value);
-
+        setIsAll(true);
         setPrkPlaceNm(parkingNm.current.value);
         // console.log("Nm", prkPlaceNm)
 
+    }
+
+    const handlePChange = () => {
+        selRef.current.value = '';
+        sel2Ref.current.value = '';
+        setGu('');
+        setDong('');
     }
 
 
@@ -112,32 +126,9 @@ const Main = () => {
 
     const handlePageChange = (page) => {
         setPage(page);
-        // console.log("page",page);
     }
 
-    // const mapName = parkData.map((item) => item.prkPlaceNm);
-    // console.log("mapName", mapName)
-
-
-    //콘텐츠 내용에 따라 div크기 늘리기(안됨)
-    // const containerRef = useRef();
-    // const [containerHeight, setContainerHeight] = useState();
-
-    // useEffect(() => {
-    //     const resizeObserver = new ResizeObserver(entries => {
-    //         for (let entry of entries) {
-    //             setContainerHeight(entry.contentRect.height)
-    //         }
-    //     });
-
-    //     if (containerRef.current) {
-    //         resizeObserver.observe(containerRef.current);
-    //     }
-
-    //     return () => {
-    //         resizeObserver.disconnect();
-    //     }
-    // }, []);
+   
 
 
     return (
@@ -183,11 +174,9 @@ const Main = () => {
                                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                         </svg>
                                     </div>
-                                    <input type="text" ref={parkingNm} className=" font-omyupretty text-lg bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-ftablel ps-10 p-2.5 " placeholder="주차장명 검색" />
+                                    <input type="text" ref={parkingNm} onChange={handlePChange} className=" font-omyupretty text-lg bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-ftablel ps-10 p-2.5 " placeholder="주차장명 검색" />
                                     {/* <input type="text" ref={parkingNm} onChange={handleSearch} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-ftablel ps-10 p-2.5 " placeholder="주차장명 검색" /> */}
                                 </div>
-                                {/* <button type='submit' className="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 "> */}
-                                {/* <button onClick={handleSearch} className="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 "> */}
                                 <button onClick={handleSearch} className="p-2.5 ms-2 text-sm font-medium text-white bg-gray-400 rounded-lg border border-gray-400 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 ">
                                     <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
@@ -199,12 +188,12 @@ const Main = () => {
                         <div className="flex pt-10">
                             <div className="flex-none w-1/6 "></div>
                             <div className="grow relative overflow-x-auto mb-20">
-                                {!gu && !dong && !prkPlaceNm && (
+                                {!gu && !dong && !prkPlaceNm && !isAll && (
                                     <p className='text-center font-omyupretty text-lg pt-5'>
                                         '구' 또는 '동'을 선택해주시거나 주차장명을 검색해주세요.
                                     </p>
                                 )}
-                                {gu || dong || prkPlaceNm ? (
+                                {gu || dong || prkPlaceNm || isAll ? (
                                     searData && Array.isArray(search) && search.length > 0 ? (
                                         <table className='table-auto w-full text-center font-SUITERegular border border-gray-300'>
                                             <thead className='bg-gradient-to-tr from-sky-800 to-blue-800 text-white'>
@@ -238,7 +227,7 @@ const Main = () => {
                                     )
                                 ) : null}
                                 <div className='pt-3 pb-3'>
-                                    {searData && Array.isArray(searData.content) && searData.content.length > 0 && (
+                                    {isAll && searData && Array.isArray(searData.content) && searData.content.length > 0 && (
                                         <Pagination activePage={page} itemsCountPerPage={psize} totalItemsCount={totalpage} pageRangeDisplayed={5} onChange={handlePageChange} />
                                     )}
                                 </div>

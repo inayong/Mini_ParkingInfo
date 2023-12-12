@@ -54,20 +54,10 @@ const BoardUpdate = () => {
         console.log('Invalid date');
     }
 
-    // const isLoggedIn = () => {
-    //     const loggedInUser = localStorage.getItem('username');
-    //     return loggedInUser === post['username'];
-    // };
+    
 
     const postUsername = post && post['username']
-    // console.log("postUsername", postUsername)
-    // console.log("currentUsername", localStorage.getItem('username'))
-
-    // useEffect(() => {
-    //     if (currentUsername !== postUsername) {
-    //         navigate("/board");
-    //     }
-    // }, [currentUsername, navigate, postUsername]);
+    
 
     //일단 버튼으로 작동하게함
     const fetchBoardUpdate = () => {
@@ -110,6 +100,9 @@ const BoardUpdate = () => {
         // }
     }
 
+    const handleCancel = () => {
+        navigate(`/board/detail/${boardId}`)
+    }
 
     return (
         <main className='flex h-screen'>
@@ -147,6 +140,7 @@ const BoardUpdate = () => {
                                         </div>
                                     </div>
                                     <div className='flex justify-center'>
+                                    <button onClick={handleCancel} className='bg-slate-300 m-3 p-2 rounded-xl'>돌아가기</button>
                                         <button onClick={fetchBoardUpdate} className='bg-slate-300 m-3 p-2 rounded-xl'>수정하기</button>
                                     </div>
                         </div>

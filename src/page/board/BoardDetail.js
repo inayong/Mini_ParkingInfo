@@ -10,6 +10,7 @@ const BoardDetail = () => {
     const { boardId } = useParams();
 
     const [boardDetail, setBoardDetail] = useState([]);
+    const [showModal, setShowModal] = useState(false);
 
     //게시글 상세페이지
 
@@ -79,6 +80,7 @@ const BoardDetail = () => {
                 if (resp.ok) {
                     // console.log("삭제 성공")
                     alert("삭제 성공");
+                    setShowModal(false);
                     navigate("/board")
                 } else {
                     alert("삭제 실패")
@@ -112,12 +114,18 @@ const BoardDetail = () => {
     //     setUnLike(unLike + 1);
     // };
 
+    const handleDelete = () => {
+        setShowModal(true);
+    }
 
+    // const confirmDelete = () => {
+
+    // }
 
 
     return (
-        <main className='flex h-screen'>
-            <div className="container mx-auto p-4 h-screen">
+        <main className='flex h-screen '>
+            <div className="container mx-auto p-4 ">
                 <div className="text-3xl font-bold mb-4">게시글 상세</div>
                 <div className='h-full pb-40 font-SUITERegular'>
                     <div className='h-full pt-16' >
@@ -132,8 +140,19 @@ const BoardDetail = () => {
                                                     <button className='ml-2'><Link to={`/board/update/${boardId}`}>수정</Link></button>
                                                 </div>
                                                 <div className='ml-5 mr-3'>
-                                                    <button onClick={fetchBoardDelete}>삭제</button>
+                                                    <button onClick={handleDelete}>삭제</button>
                                                 </div>
+                                                {showModal && (
+                                                    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+                                                        <div className="bg-white p-16 rounded-md">
+                                                            <p className='text-2xl'>삭제하시겠습니까?</p>
+                                                            <div className="flex justify-center mt-4 pt-3">
+                                                                <button onClick={fetchBoardDelete} className="px-3 py-1 bg-red-500 text-white rounded-md">삭제</button>
+                                                                <button onClick={() => setShowModal(false)} className="ml-4 px-3 py-1 bg-gray-300 rounded-md">취소</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
                                         )}
                                     </div>

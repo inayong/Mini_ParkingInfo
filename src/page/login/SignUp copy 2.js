@@ -17,7 +17,7 @@ const SignUp = () => {
     const register = () => {
 
         fetch("http://10.125.121.217:8080/user/join", {
-                method: "POST",
+                method: "post",
                 headers: {
                     'Content-Type': 'application/json',
                     },
@@ -33,10 +33,7 @@ const SignUp = () => {
                 if ((resp.status === 200)) {
                     alert("회원가입 완료");
                     navigate("/login");
-                } else if ((resp.status) === 406) {
-                    // console.log("500",resp.status)
-                    alert("이미 존재하는 아이디입니다. 아이디를 변경해서 가입해주세요.")
-                }
+                } 
             })
             .catch((err) => {
                 console.log("error", err)
@@ -115,6 +112,24 @@ const SignUp = () => {
                                         </div>
                                     </div>
                                 </div>
+                                {/* <div className="flex -mx-3">
+                                    <div className="w-full px-3 mb-5">
+                                        <label htmlFor="" className="text-xs font-semibold px-1">휴대폰 번호</label>
+                                        <div className="flex">
+                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
+                                            <input type="email" className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-sky-800" placeholder="'-' 제외" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex -mx-3">
+                                    <div className="w-full px-3 mb-12">
+                                        <label htmlFor="" className="text-xs font-semibold px-1">Email</label>
+                                        <div className="flex">
+                                            <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-lock-outline text-gray-400 text-lg"></i></div>
+                                            <input type="email" className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-sky-800" placeholder="johnsmith@example.com" />
+                                        </div>
+                                    </div>
+                                </div> */}
                                 <div className="flex -mx-3">
                                     <div className="w-full px-3 mb-5">
                                         <button onClick={register} className="block w-full max-w-xs mx-auto bg-blue-800 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">REGISTER NOW</button>
