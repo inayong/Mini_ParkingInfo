@@ -1,6 +1,6 @@
 # [K-Digital] Mini Project_FrontEnd
 > ### 부산 주차장 정보를 알려주는 서비스 입니다.   
-> [시연영상](링크달기)
+> [시연영상](https://youtu.be/_blzi_NSuic)
 >
 ![배경](https://github.com/inayong/Mini_ParkingInfo/assets/141033984/a78eb076-9aa0-43e3-a90f-1bb7e28e80e7)
 
