@@ -2,7 +2,7 @@
 > ### 부산 주차장 정보를 알려주는 서비스 입니다.   
 > [시연영상](링크달기)
 >
-> ![배경](https://github.com/inayong/Mini_ParkingInfo/assets/141033984/a78eb076-9aa0-43e3-a90f-1bb7e28e80e7)
+![배경](https://github.com/inayong/Mini_ParkingInfo/assets/141033984/a78eb076-9aa0-43e3-a90f-1bb7e28e80e7)
 
 
 ## 팀 구성
@@ -23,6 +23,7 @@
 
 <img src="https://img.shields.io/badge/tailwindcss-black?style=flat-square&logo=tailwindcss&logoColor=06B6D4"/> | 3.3.5
 ---------- | ---------
+
 <br />
 <br />
 

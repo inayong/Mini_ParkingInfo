@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import CommentForm from './CommentForm';
+import CommentForm from '../page/board/comment/CommentForm';
 
 
 const Comment = ({ datePart, timePart }) => {

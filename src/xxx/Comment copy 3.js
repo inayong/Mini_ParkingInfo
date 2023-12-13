@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import CommentForm from './CommentForm';
+import CommentForm from '../page/board/comment/CommentForm';
 
 
 const Comment = ({ datePart, timePart }) => {
@@ -140,43 +140,47 @@ const Comment = ({ datePart, timePart }) => {
         {comments && Array.isArray(comments) && comments.map((item) => (
           <div>
             <div key={item.id} className=' pt-5 px-5'>
-              <div className='flex'>
+              <div className='flex flex-col'>
                 <div className='font-black p-2'>{item.username}</div>
                 {loginUser === item.username && (
                   <div className='flex text-sm items-center'>
                     <div className='ml-auto'>
                       {selectedCommentId === item.id ? (
-                        <div>
+                        <div className=''>
                           <textarea
                             value={editComment[item.id]}
-                            onChange={(e) => setEditComment({
-                              ...editComment,
-                              [item.id]: e.target.value
-                            })
+                            onChange={(e) =>
+                              setEditComment({
+                                ...editComment,
+                                [item.id]: e.target.value,
+                              })
                             }
                           />
                           <button onClick={() => updateComment(item.id)}>저장</button>
                           <button onClick={() => cancelEditing()}>취소</button>
                         </div>
                       ) : (
-                        <button key={item.id} className='ml-10' onClick={() => startEditing(item.id, item.content)}>수정</button>
+                        <button key={item.id} className='ml-10' onClick={() => startEditing(item.id, item.content)}>
+                          수정
+                        </button>
                       )}
                     </div>
                     <div className='ml-2'>
                       {showDeleteButton && (
-                      <button key={item.id} onClick={() => deleteComment(item.id)}>삭제</button>
+                        <button key={item.id} onClick={() => deleteComment(item.id)}>삭제</button>
                       )}
                     </div>
                   </div>
                 )}
               </div>
-              <div className='pl-3 pt-1'>{item.content}</div>
-              {/* <div>{item.createDate}</div> */}
-              <div className="whitespace-pre pt-2 text-xs text-gray-500 border-b">{datePart}{'     '}{hour}:{minute}</div>
-              {/* <div>
-                {datePart && `${datePart} `}
-                {hour && minute && <>&nbsp;&nbsp;{hour}:{minute}</>}
-              </div> */}
+              {selectedCommentId !== item.id && (
+                <div>
+                  <div className='pl-3 pt-1'>{item.content}</div>
+                  <div className="whitespace-pre pt-2 text-xs text-gray-500 border-b">
+                    {datePart}{'     '}{hour}:{minute}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         ))}

@@ -1,8 +1,11 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import CommentForm from '../page/board/comment/CommentForm';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import Comment from "../page/board/comment/Comment";
 
 const BoardDetail = () => {
+
+    const navigate = useNavigate();
 
     const { boardId } = useParams();
     // const { id } = useParams();
@@ -10,6 +13,7 @@ const BoardDetail = () => {
     const [boardDetail, setBoardDetail] = useState([]);
 
     //게시글 상세페이지
+    
     const fetchBoardDetail = () => {
 
         fetch(`http://10.125.121.217:8080/board/detail/${boardId}`)
@@ -27,6 +31,11 @@ const BoardDetail = () => {
 
     //오브젝트 값 가져오기
     useEffect(() => {
+        // console.log("useEffect", boardDetail)
+        // Object.entries(boardDetail).map((k, idx) => console.log(k,k[0], k[1]))
+
+        // console.log('title', boardDetail['title'])
+        // console.log('content', boardDetail['content'])
 
     }, [boardDetail])
 
@@ -50,71 +59,54 @@ const BoardDetail = () => {
         console.log('Invalid date');
     }
 
-    //댓글 불러오기
-    const [comments, setComments] = useState([]);
-
-    const commentFetch = () => {
-        const url = `http://10.125.121.217:8080/comment/boardComment/${boardId}`;
-        // console.log(url)
-        fetch(url)
-            .then(resp => resp.json())
-            .then(data => setComments(data))
-            .catch(err => console.log("err", err))
-    }
-    useEffect(() => {
-        // fetchBoardDetail();
-        commentFetch();
-
-    }, [])
-
     
-    //댓글 입력
-    const addComment = (content) => {
-        fetch(`http://10.125.121.217:8080/comment/create/${boardId}`, {
-            method: "post",
+
+    //수정 & 삭제 버튼
+    const isLoggedIn = () => {
+        const loggedInUser = localStorage.getItem('username');
+        return loggedInUser === boardDetail['username'];
+    };
+
+    //삭제
+    const fetchBoardDelete = () => {
+        fetch(`http://10.125.121.217:8080/board/delete/${boardId}`, {
+            method: "DELETE",
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': localStorage.getItem("token")
             },
-            body: JSON.stringify({
-                "content": content
-                // "username": localStorage.getItem("username")
-            }),
         })
-            .then((data) => {
-                setComments([...comments, data])
-                // commentFetch();
+            .then((resp) => {
+                if (resp.ok) {
+                    // console.log("삭제 성공")
+                    alert("삭제 성공");
+                    navigate("/board")
+                } else {
+                    alert("삭제 실패")
+                }
             })
-            .catch((err) => console.log("댓글 등록 실패:", err))
+            .catch((err) => console.log("게시글 삭제 오류:", err))
     }
 
-
-    // console.log(boardDetail)
-
-    //수정 & 삭제 버튼
-    const isLoggedIn = () => {
-        const loggedInUser = localStorage.getItem('username'); 
-        return loggedInUser === boardDetail['username'];
-    };
 
 
 
     return (
         <main className='flex h-screen'>
             <div className="container mx-auto p-4 h-screen">
-                <h1 className="text-3xl font-bold mb-4">게시글 상세</h1>
+                {/* <div className="text-3xl font-bold mb-4">게시글 상세</div> */}
                 <div className='h-full pb-40 font-SUITERegular'>
-                    <div className='h-full' >
-                        <div className='border-4 border-gray-100 shadow-md rounded-lg m-10 px-3'>
+                    <div className='h-full pt-16' >
+                    <div className='bg-gradient-to-tr from-blue-800 to-sky-800 p-1 rounded-lg'>
                             <div className='flex justify-between pt-2 pb-1'>
                                 <div className=' w-1/2 font-bold text-4xl '>{boardDetail['title']}</div>
                                 {isLoggedIn() && (
                                 <div className='flex items-center'>
                                     <div className='ml-auto'>
-                                        <button className='ml-2'>수정</button>
+                                        <button className='ml-2'><Link to={`/board/update/${boardId}`}>수정</Link></button>
                                     </div>
                                     <div className='ml-2'>
-                                        <button>삭제</button>
+                                        <button onClick={fetchBoardDelete}>삭제</button>
                                     </div>
                                 </div>
                                 )}
@@ -133,17 +125,7 @@ const BoardDetail = () => {
                                 </div>
                             </div>
                             <div className='pt-20 pb-10'>
-                                {comments && Array.isArray(comments) && comments.map((item) => (
-                                    <div key={item.id} className='bg-slate-300'>
-                                        <div className='text-lg'>댓글목록</div>
-                                        <div>
-                                            <div>작성자: {item.username}</div>
-                                            <div>내용: {item.content}</div>
-                                            <div>작성일: {item.createDate}</div>
-                                        </div>
-                                    </div>
-                                ))}
-                                <CommentForm onSubmit={addComment} />
+                                <Comment />
                             </div>
                         </div>
                         <div className='flex pt-8 justify-center'>
